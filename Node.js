@@ -11,6 +11,7 @@ class Node {
         this.id = "";
         this.text = new NodeText();
         this.isUpdated = false;
+        this.type = "rect";
     }
     
     Update(n)
@@ -23,5 +24,6 @@ class Node {
         this.id = n.id;
         this.text.Update(n.text);
         this.isUpdated = false;
+        this.type = n.type;
     }
 }

@@ -17,28 +17,44 @@ function RenderData(nodesArray)
 
 function RenderOneNode(node)
 {
-    mainSvg.append("rect")
-        .attr("x", node.x)
-        .attr("y", 0)
-        .attr("width", node.width)
-        .attr("height", node.height)
-        .attr("fill", node.color)
-        .attr("id", node.id);
-        
-    d3.select("#"+node.id).transition()
-                        .attr("y", node.y)
-                        .ease(d3.easeBounce)
-                        .duration(1000);
-        
-    mainSvg.append("text")
-        .text(node.text.value)
-        .attr("text-anchor", "middle")
-        .attr("x", node.text.x)
-        .attr("y", node.text.y)
-        .attr("font-family", node.text.font)
-        .attr("font-size", node.text.size)
-        .attr("fill", node.text.color)
-        .attr("id", node.text.id);
+    if(node.type == "rect")
+    {
+        mainSvg.append("rect")
+            .attr("x", node.x)
+            .attr("y", node.y)
+            .attr("width", node.width)
+            .attr("height", node.height)
+            .attr("fill", node.color)
+            .attr("id", node.id);
+            
+        // d3.select("#"+node.id).transition()
+        //                     .attr("y", node.y)
+        //                     .ease(d3.easeBounce)
+        //                     .duration(1000);
+            
+        mainSvg.append("text")
+            .text(node.text.value)
+            .attr("text-anchor", "middle")
+            .attr("x", node.text.x)
+            .attr("y", node.text.y)
+            .attr("font-family", node.text.font)
+            .attr("font-size", node.text.size)
+            .attr("fill", node.text.color)
+            .attr("id", node.text.id);
+    }
+    else if(node.type == "connector")
+    {
+        mainSvg.append("line")
+                .attr("x1", node.x1)
+                .attr("y1", node.y1)
+                .attr("x2", node.x2)
+                .attr("y2", node.y2)
+                .attr("stroke-width", node.width)
+                .attr("stroke", node.color)
+                .attr("id", node.id)
+                .attr("marker-end", "url(#Triangle)");
+                // .attr("marker-start", "url(#MCircle)");
+    }
 }
 
 function sleep(ms) {
@@ -54,19 +70,29 @@ async function PlayAnimation(states)
         {
             if(states[i].Nodes[j].isUpdated)
             {
-                d3.select("#"+states[i].Nodes[j].id).transition()
-                    .attr("fill", states[i].Nodes[j].color)
-                    .attr("x", states[i].Nodes[j].x).duration(1000)
-                    .attr("y", states[i].Nodes[j].y).duration(1000)
-                    .ease(d3.easeBounce)
-                    .duration(1000);
-                d3.select("#"+states[i].Nodes[j].text.id).transition()
-                    .attr("fill", states[i].Nodes[j].text.color)
-                    .attr("x", states[i].Nodes[j].text.x)
-                    .attr("y", states[i].Nodes[j].text.y)
-                    .attr("text-anchor", "middle")
-                    .ease(d3.easeBounce)
-                    .duration(1000);
+                if(states[i].Nodes[j].type == "rect")
+                {
+                    d3.select("#"+states[i].Nodes[j].id).transition()
+                        .attr("fill", states[i].Nodes[j].color)
+                        .attr("x", states[i].Nodes[j].x).duration(1000)
+                        .attr("y", states[i].Nodes[j].y).duration(1000)
+                        .ease(d3.easeBounce)
+                        .duration(1000);
+                    if(states[i].Nodes[j].text.id != "")
+                    {
+                        d3.select("#"+states[i].Nodes[j].text.id).transition()
+                            .attr("fill", states[i].Nodes[j].text.color)
+                            .attr("x", states[i].Nodes[j].text.x)
+                            .attr("y", states[i].Nodes[j].text.y)
+                            .attr("text-anchor", "middle")
+                            .ease(d3.easeBounce)
+                            .duration(1000);
+                    }
+                }
+                if(states[i].Nodes[j].type == "connector")
+                {
+                    
+                }
             }
         }
         await sleep(1000);

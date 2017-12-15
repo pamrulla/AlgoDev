@@ -1,5 +1,6 @@
 // JavaScript File
 /*global Node*/
+/*global Connector*/
 
 class SingleState
 {
@@ -10,8 +11,17 @@ class SingleState
     
     AddANode(n)
     {
-        var nn = new Node();
-        nn.Update(n);
-        this.Nodes.push(nn);
+        if(n.type == "rect")
+        {
+            var nn = new Node();
+            nn.Update(n);
+            this.Nodes.push(nn);
+        }
+        else if(n.type == "connector")
+        {
+            var nn = new Connector();
+            nn.Update(n);
+            this.Nodes.push(nn);
+        }
     }
 }
