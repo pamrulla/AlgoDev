@@ -11,8 +11,11 @@ $( document ).ready(function() {
     RenderData(controller.Nodes);
     
     controller.InsertAtEnd(10);
-    //controller.BubbleSort();
+   // controller.BubbleSort();
     //controller.SelectionSort();
-    console.log(controller.sortStates);
-    PlayAnimation(controller.sortStates);
+    PlayAnimation(controller.States).then(() => {
+        controller.InsertAtEnd(12);
+        PlayAnimation(controller.States);
+    });
+    
 });

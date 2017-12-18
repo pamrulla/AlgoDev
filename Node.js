@@ -23,7 +23,7 @@ class Node {
         this.height = n.height;
         this.id = n.id;
         this.text.Update(n.text);
-        this.isUpdated = false;
+        this.isUpdated = n.isUpdated;
         this.type = n.type;
     }
 }

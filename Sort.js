@@ -12,8 +12,8 @@ class Sort {
     constructor(customValues) {
         if(isNaN(customValues))
         {
-            //var dfv = "26, 17, 48, 30, 10, 36, 1, 17, 28, 44, 26, 26, 49";
-            var dfv = "5, 4, 3, 2, 1";
+            var dfv = "26, 17, 48, 30, 10, 36, 1, 17, 28, 44, 26, 26, 49";
+            //var dfv = "5, 4, 3, 2, 1";
             this.dataset = dfv.split(',').map(function(item) {
                 return parseInt(item, 10);
             });
@@ -26,7 +26,7 @@ class Sort {
         }
         
         this.Nodes = [];
-        this.sortStates = [];
+        this.States = [];
         
         this.init();
     }
@@ -81,7 +81,7 @@ class Sort {
                 this.Nodes[tempList[index].id].color = "green";
             }
         }
-        this.sortStates.push(st2);
+        this.States.push(st2);
     }
     
     InsertStateSwappingNodes(index, index1, tempList)
@@ -98,7 +98,7 @@ class Sort {
             }
         }
         
-        this.sortStates.push(st1);
+        this.States.push(st1);
     }
     
     InsertInitialState()
@@ -109,7 +109,7 @@ class Sort {
         {
           state.AddANode(this.Nodes[i]);
         }
-        this.sortStates.push(state);
+        this.States.push(state);
     }
     
     InsertStateSelectedNodes(index, index1, tempList)
@@ -129,7 +129,7 @@ class Sort {
                 st.Nodes[k].color = "red";
             }
         }
-        this.sortStates.push(st);
+        this.States.push(st);
     }
     
     SwapMasterNodes(index, index1, tempList)

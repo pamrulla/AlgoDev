@@ -6,6 +6,7 @@
 /*global width*/
 /*global height*/
 /*global padding*/
+/*global $*/
 
 function RenderData(nodesArray)
 {
@@ -63,6 +64,7 @@ function sleep(ms) {
 
 async function PlayAnimation(states)
 {
+    
     for(var i = 0; i < states.length; i++)
     {
         
@@ -72,11 +74,13 @@ async function PlayAnimation(states)
             {
                 if(states[i].Nodes[j].type == "rect")
                 {
+                    if (! $("#"+states[i].Nodes[j].id).length){
+                        RenderOneNode(states[i].Nodes[j]);
+                    }
                     d3.select("#"+states[i].Nodes[j].id).transition()
                         .attr("fill", states[i].Nodes[j].color)
-                        .attr("x", states[i].Nodes[j].x).duration(1000)
+                        .attr("x", states[i].Nodes[j].x)
                         .attr("y", states[i].Nodes[j].y).duration(1000)
-                        .ease(d3.easeBounce)
                         .duration(1000);
                     if(states[i].Nodes[j].text.id != "")
                     {
@@ -85,13 +89,21 @@ async function PlayAnimation(states)
                             .attr("x", states[i].Nodes[j].text.x)
                             .attr("y", states[i].Nodes[j].text.y)
                             .attr("text-anchor", "middle")
-                            .ease(d3.easeBounce)
                             .duration(1000);
                     }
                 }
                 if(states[i].Nodes[j].type == "connector")
                 {
+                    if (! $("#"+states[i].Nodes[j].id).length){
+                        RenderOneNode(states[i].Nodes[j]);
+                    }
                     
+                    d3.select("#"+states[i].Nodes[j].id).transition()
+                        .attr("x1", states[i].Nodes[j].x1)
+                        .attr("y1", states[i].Nodes[j].y1)
+                        .attr("x2", states[i].Nodes[j].x2)
+                        .attr("y2", states[i].Nodes[j].y2).duration(1000)
+                        .duration(1000);
                 }
             }
         }

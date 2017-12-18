@@ -1,6 +1,6 @@
 /*global d3*/
 
-var width = window.innerWidth, height = window.innerWidth;
+var width = window.innerWidth, height = 300;//window.innerWidth;
     
 var padding = 5
 
