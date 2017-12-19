@@ -5,16 +5,19 @@
 /*global $*/
 /*global RenderData*/
 /* global PlayAnimation*/
+/* global Stack*/
+/* global Queue*/
 
 $( document ).ready(function() {
-    var controller = new LinkedList();
+    var controller = new Queue();
     RenderData(controller.Nodes);
     
-    controller.InsertAtEnd(10);
+    controller.Push(10);
    // controller.BubbleSort();
     //controller.SelectionSort();
+    // console.log(controller.States);
     PlayAnimation(controller.States).then(() => {
-        controller.InsertAtEnd(12);
+        controller.Push(12);
         PlayAnimation(controller.States);
     });
     

@@ -43,6 +43,25 @@ function RenderOneNode(node)
             .attr("fill", node.text.color)
             .attr("id", node.text.id);
     }
+    if(node.type == "circle")
+    {
+        mainSvg.append("circle")
+            .attr("cx", node.x)
+            .attr("cy", node.y)
+            .attr("r", node.width)
+            .attr("fill", node.color)
+            .attr("id", node.id);
+            
+        mainSvg.append("text")
+            .text(node.text.value)
+            .attr("text-anchor", "middle")
+            .attr("x", node.text.x)
+            .attr("y", node.text.y)
+            .attr("font-family", node.text.font)
+            .attr("font-size", node.text.size)
+            .attr("fill", node.text.color)
+            .attr("id", node.text.id);
+    }
     else if(node.type == "connector")
     {
         mainSvg.append("line")
@@ -55,6 +74,14 @@ function RenderOneNode(node)
                 .attr("id", node.id)
                 .attr("marker-end", "url(#Triangle)");
                 // .attr("marker-start", "url(#MCircle)");
+    }
+    else if(node.type == "path")
+    {
+        mainSvg.append("path")
+                .attr("stroke", node.color)
+                .attr("stroke-width", node.width)
+                .attr("fill", "none")
+                .attr("d", node.path);
     }
 }
 
@@ -82,6 +109,27 @@ async function PlayAnimation(states)
                         .attr("x", states[i].Nodes[j].x)
                         .attr("y", states[i].Nodes[j].y).duration(1000)
                         .duration(1000);
+                    if(states[i].Nodes[j].text.id != "")
+                    {
+                        d3.select("#"+states[i].Nodes[j].text.id).transition()
+                            .attr("fill", states[i].Nodes[j].text.color)
+                            .attr("x", states[i].Nodes[j].text.x)
+                            .attr("y", states[i].Nodes[j].text.y)
+                            .attr("text-anchor", "middle")
+                            .duration(1000);
+                    }
+                }
+                else if(states[i].Nodes[j].type == "circle")
+                {
+                    if (! $("#"+states[i].Nodes[j].id).length){
+                        RenderOneNode(states[i].Nodes[j]);
+                    }
+                    d3.select("#"+states[i].Nodes[j].id).transition()
+                        .attr("fill", states[i].Nodes[j].color)
+                        .attr("cx", states[i].Nodes[j].x)
+                        .attr("cy", states[i].Nodes[j].y).duration(1000)
+                        .duration(1000);
+                        
                     if(states[i].Nodes[j].text.id != "")
                     {
                         d3.select("#"+states[i].Nodes[j].text.id).transition()

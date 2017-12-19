@@ -12,6 +12,7 @@ class Node {
         this.text = new NodeText();
         this.isUpdated = false;
         this.type = "rect";
+        this.path = "";
     }
     
     Update(n)
@@ -25,5 +26,6 @@ class Node {
         this.text.Update(n.text);
         this.isUpdated = n.isUpdated;
         this.type = n.type;
+        this.path = n.d;
     }
 }
