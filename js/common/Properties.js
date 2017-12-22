@@ -1,43 +1,34 @@
 /*global d3*/
+var width;
+var height;
+var mainSvg;
+var defs;
+var padding;
 
-var width = 400/*window.innerWidth*/, height = 300;//window.innerWidth;
-    
-var padding = 5
+var $ = jQuery.noConflict();
 
-var mainSvg = d3.select("body")
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height);
-
-var defs = mainSvg.append("defs");
-    
-    defs.append("marker")
-        .attr("id", "Triangle")
-        .attr("viewBox", "0 0 10 10")
-        .attr("refX", 1)
-        .attr("refY", 5)
-        .attr("markerWidth", 4)
-        .attr("markerHeight", 4)
-        .attr("orient", "auto")
-        .append("path")
-        .attr("d", "M 0 0 L 10 5 L 0 10 z");
-    
-    // defs.append("marker")
-    //     .attr("id", "MCircle")
-    //     .attr("viewBox", "0 0 10 10")
-    //     .attr("refX", 0)
-    //     .attr("refY", 0)
-    //     .attr("markerWidth", 4)
-    //     .attr("markerHeight", 4)
-    //     .attr("orient", "auto")
-    //     .append("circle")
-    //     .attr("cx", "0")
-    //     .attr("cy", "0")
-    //     .attr("r", "5");
+$( document ).ready(function() {
+    width = 400;
+    height = 300;
         
-// <defs>
-//     <marker id="Triangle" viewBox="0 0 10 10" refX="1" refY="5"
-//         markerWidth="6" markerHeight="6" orient="auto">
-//       <path d="M 0 0 L 10 5 L 0 10 z" />
-//     </marker>
-//   </defs>
+    padding = 5;
+
+    mainSvg = d3.select("#sim-area")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+    defs = mainSvg.append("defs");
+        
+        defs.append("marker")
+            .attr("id", "Triangle")
+            .attr("viewBox", "0 0 10 10")
+            .attr("refX", 1)
+            .attr("refY", 5)
+            .attr("markerWidth", 4)
+            .attr("markerHeight", 4)
+            .attr("orient", "auto")
+            .append("path")
+            .attr("d", "M 0 0 L 10 5 L 0 10 z");
+
+});
