@@ -82,11 +82,11 @@ function hestia_algo_category_content() {
 		$terms = get_terms('topics');
         
         $colors = ['purple-gradient', 'peach-gradient', 'blue-gradient', 'green-gradient'];
-        
+        echo '<div class="row">';
+			
         foreach($terms as $term) {
             
 			$i = 1;
-			echo '<div class="row">';
 				?>
 				<div class="col-ms-6 col-sm-6 col-md-3 shop-item algo-item">
                     <a href="<?php echo get_term_link($term->term_id); ?>">
@@ -103,9 +103,9 @@ function hestia_algo_category_content() {
 					echo '<div class="row">';
 				}
 				$i ++;
-			
-			echo '</div>';
 		}
+    
+			echo '</div>';
 		?>
 	</div>
 	<?php

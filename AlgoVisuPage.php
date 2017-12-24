@@ -21,8 +21,11 @@
 	<div class="blog-post <?php esc_attr( $class_to_add ); ?>">
 		<div class="container-fluid">
             <div id="sim-area" class="text-center">
+                
             </div>
 		</div>
 	</div>
 </div>
+
+
 <?php get_footer(); ?>

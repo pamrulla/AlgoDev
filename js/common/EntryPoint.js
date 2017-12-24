@@ -9,16 +9,16 @@
 /* global Queue*/
 
 $( document ).ready(function() {
-    var controller = new Queue();
+    var controller = new LinkedList();
     RenderData(controller.Nodes);
     
-    controller.Push(10);
-   // controller.BubbleSort();
+    controller.InsertAtEnd(10);
+    //controller.BubbleSort();
     //controller.SelectionSort();
     // console.log(controller.States);
     PlayAnimation(controller.States).then(() => {
-        controller.Push(12);
-        PlayAnimation(controller.States);
+        //controller.Push(12);
+        //PlayAnimation(controller.States);
     });
     
 });
