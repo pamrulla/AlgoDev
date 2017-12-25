@@ -34,22 +34,14 @@
 
                 </div>
             </div>
-            <div class="row text-center">
-                <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown button
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </div>
-                </div>
-            </div>
             <div class="row">
                 <div id="controls-area" class="text-center">
                     <div class="player text-center">
                         <button type="button" id="button_fbw" class="btn" onclick='buttonRewindPress()'>
+                          Actions
+                        </button>
+                        
+                        <button type="button" id="button_fbw" class="btn emptyButton" onclick='buttonRewindPress()'>
                           <i class="fa fa-fast-backward"></i>
                         </button>
 
@@ -71,7 +63,8 @@
 
                         <button type="button" id="button_ffw" class="btn" onclick='buttonFastforwardPress()'>
                           <i class="fa fa-fast-forward"></i>
-                        </button>    
+                        </button>
+                        
                       </div>
                 </div>
             </div>
