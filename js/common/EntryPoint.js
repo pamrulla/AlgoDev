@@ -12,10 +12,26 @@
 var controller = null;
 
 $( document ).ready(function() {
+    
     if(window['topic'] == "Sort"){
         controller = new Sort();
         ProcessRender(controller);
         ProcessSorting(controller);
+    }
+    else if(window['topic'] == "Stack"){
+        controller = new Stack();
+        ProcessRender(controller);
+        //ProcessSorting(controller);
+    }
+    else if(window['topic'] == "Queue"){
+        controller = new Queue();
+        ProcessRender(controller);
+        //ProcessSorting(controller);
+    }
+    else if(window['topic'] == "LinkedList"){
+        controller = new LinkedList();
+        ProcessRender(controller);
+        //ProcessSorting(controller);
     }
 });
 

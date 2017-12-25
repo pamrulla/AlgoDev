@@ -9,7 +9,7 @@ var state = 'stop';
 var $ = jQuery.noConflict();
 
 $( document ).ready(function() {
-    width = 400;
+    width = 280;
     height = 300;
         
     padding = 5;
