@@ -91,10 +91,22 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function PlayAnimation(states)
+async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame = false, isPrevFrame = false, isLastFrame = false)
 {
+    if(isFirstFrameToRender){
+        currentState = 0;
+    }
+    else if(isNextFrame) {
+        currentState++;
+    }
+    else if(isPrevFrame) {
+        --currentState;
+    }
+    else if(isLastFrame) {
+        currentState = states.length - 1;
+    }
     
-    for(var i = 0; i < states.length; i++)
+    for(var i = currentState; i < states.length; i++)
     {
         currentState = i;
         for(var j=0; j<states[i].Nodes.length; j++)
@@ -158,6 +170,23 @@ async function PlayAnimation(states)
             }
         }
         
-        await sleep(1000);
+        
+        if(isFirstFrameToRender || isNextFrame || isPrevFrame || isLastFrame) {
+            return;
+        }
+        
+        if(state == 'play' || state == 'resume  ') {
+            await sleep(1000);
+        }
+        else if(state == 'stop') {
+            currentState = 0;
+            return;
+        }
+        else {
+            return;
+        }
     }
+    
+    currentState = 0;
+    buttonStopPress();
 }

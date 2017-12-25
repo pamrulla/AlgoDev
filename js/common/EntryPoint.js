@@ -36,19 +36,31 @@ function ProcessSorting(controller)
 }
 
 function buttonBackPress() {
-    console.log("button back invoked.");
+    if(controller != null)
+    {
+        PlayAnimation(controller.States, false, false, true);
+    }
 }
 
 function buttonForwardPress() {
-    console.log("button forward invoked.");
+    if(controller != null)
+    {
+        PlayAnimation(controller.States, false, true);
+    }
 }
 
 function buttonRewindPress() {
-    console.log("button rewind invoked.");
+    if(controller != null)
+    {
+        PlayAnimation(controller.States, true);
+    }
 }
 
 function buttonFastforwardPress() {
-    console.log("button fast forward invoked.");
+    if(controller != null)
+    {
+        PlayAnimation(controller.States, false, false, false, true);
+    }
 }
 
 function buttonPlayPress() {
@@ -64,18 +76,14 @@ function buttonPlayPress() {
     }
     else if(state=='play' || state=='resume'){
       state = 'pause';
-      d3.select("#button_play i").attr('class', "fa fa-play");
-      if(controller != null)
-      {
-          PauseAnimation(controller.States);
-      }  
+      d3.select("#button_play i").attr('class', "fa fa-play");  
     }
     else if(state=='pause'){
       state = 'resume';
       d3.select("#button_play i").attr('class', "fa fa-pause");
       if(controller != null)
       {
-          ResumeAnimation(controller.States);
+          PlayAnimation(controller.States);
       }
     }
 }
@@ -86,6 +94,6 @@ function buttonStopPress(){
     button.select("i").attr('class', "fa fa-play");
     if(controller != null)
     {
-          StopAnimation(controller.States);
-    }    
+        PlayAnimation(controller.States, true);
+    }
 }

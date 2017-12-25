@@ -108,6 +108,7 @@ class Sort {
         for(var i = 0; i < this.Nodes.length; i++)
         {
           state.AddANode(this.Nodes[i]);
+          state.Nodes[i].isUpdated = 'true';
         }
         this.States.push(state);
     }
