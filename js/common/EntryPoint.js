@@ -8,17 +8,84 @@
 /* global Stack*/
 /* global Queue*/
 
+
+var controller = null;
+
 $( document ).ready(function() {
-    var controller = new LinkedList();
-    RenderData(controller.Nodes);
-    
-    controller.InsertAtEnd(10);
-    //controller.BubbleSort();
-    //controller.SelectionSort();
-    // console.log(controller.States);
-    PlayAnimation(controller.States).then(() => {
-        //controller.Push(12);
-        //PlayAnimation(controller.States);
-    });
-    
+    if(window['topic'] == "Sort"){
+        controller = new Sort();
+        ProcessRender(controller);
+        ProcessSorting(controller);
+    }
 });
+
+function ProcessRender(controller)
+{
+    if(controller != null){
+        RenderData(controller.Nodes);
+    }
+}
+
+function ProcessSorting(controller)
+{
+    var type = window['typename'];
+    if(type == "BubbleSort")
+    {
+        controller.BubbleSort();
+    }
+}
+
+function buttonBackPress() {
+    console.log("button back invoked.");
+}
+
+function buttonForwardPress() {
+    console.log("button forward invoked.");
+}
+
+function buttonRewindPress() {
+    console.log("button rewind invoked.");
+}
+
+function buttonFastforwardPress() {
+    console.log("button fast forward invoked.");
+}
+
+function buttonPlayPress() {
+    if(state=='stop'){
+      state='play';
+      var button = d3.select("#button_play").classed('btn-success', true); 
+      button.select("i").attr('class', "fa fa-pause");
+      
+      if(controller != null)
+      {
+          PlayAnimation(controller.States);
+      }
+    }
+    else if(state=='play' || state=='resume'){
+      state = 'pause';
+      d3.select("#button_play i").attr('class', "fa fa-play");
+      if(controller != null)
+      {
+          PauseAnimation(controller.States);
+      }  
+    }
+    else if(state=='pause'){
+      state = 'resume';
+      d3.select("#button_play i").attr('class', "fa fa-pause");
+      if(controller != null)
+      {
+          ResumeAnimation(controller.States);
+      }
+    }
+}
+
+function buttonStopPress(){
+    state = 'stop';
+    var button = d3.select("#button_play").classed('btn-success', false);
+    button.select("i").attr('class', "fa fa-play");
+    if(controller != null)
+    {
+          StopAnimation(controller.States);
+    }    
+}

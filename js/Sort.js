@@ -12,8 +12,8 @@ class Sort {
     constructor(customValues) {
         if(isNaN(customValues))
         {
-            var dfv = "26, 17, 48, 30, 10, 36, 1, 17, 28, 44, 26, 26, 49";
-            //var dfv = "5, 4, 3, 2, 1";
+            //var dfv = "26, 17, 48, 30, 10, 36, 1, 17, 28, 44, 26, 26, 49";
+            var dfv = "5, 4, 3, 2, 1";
             this.dataset = dfv.split(',').map(function(item) {
                 return parseInt(item, 10);
             });

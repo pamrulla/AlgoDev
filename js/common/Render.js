@@ -8,6 +8,8 @@
 /*global padding*/
 /*global $*/
 
+var currentState = 0;
+
 function RenderData(nodesArray)
 {
     for(var i=0; i < nodesArray.length; i++)
@@ -94,7 +96,7 @@ async function PlayAnimation(states)
     
     for(var i = 0; i < states.length; i++)
     {
-        
+        currentState = i;
         for(var j=0; j<states[i].Nodes.length; j++)
         {
             if(states[i].Nodes[j].isUpdated)
@@ -155,6 +157,7 @@ async function PlayAnimation(states)
                 }
             }
         }
+        
         await sleep(1000);
     }
 }

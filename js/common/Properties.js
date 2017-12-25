@@ -4,6 +4,7 @@ var height;
 var mainSvg;
 var defs;
 var padding;
+var state = 'stop';
 
 var $ = jQuery.noConflict();
 
