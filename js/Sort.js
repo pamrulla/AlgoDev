@@ -101,6 +101,7 @@ class Sort {
                 this.Nodes[tempList[index].id].color = "green";
             }
         }
+        st2.text = "The values " + this.Nodes[tempList[index].id].text.value + " is sorted.";
         this.States.push(st2);
     }
     
@@ -116,7 +117,7 @@ class Sort {
                 st1.Nodes[k].color = "red";
             }
         }
-        
+        st1.text = "Swapping values " + this.Nodes[tempList[index].id].text.value + " & " + this.Nodes[tempList[index1].id].text.value + ".";
         this.States.push(st1);
     }
     
@@ -128,6 +129,7 @@ class Sort {
           state.AddANode(this.Nodes[i]);
           state.Nodes[i].isUpdated = 'true';
         }
+        state.text = "Initial order of values";
         this.States.push(state);
     }
     
@@ -147,6 +149,7 @@ class Sort {
                 st.Nodes[k].color = "red";
             }
         }
+        st.text = "Selecting values " + this.Nodes[tempList[index].id].text.value + " & " + this.Nodes[tempList[index1].id].text.value + " for comparison.";
         this.States.push(st);
     }
     
@@ -233,5 +236,12 @@ class Sort {
           
           this.InsertStateSortedNode(i, tempList);
       }
+    }
+    
+    ProcessSorting(type) {
+        if(type == "BubbleSort")
+        {
+            controller.BubbleSort();
+        }
     }
 }

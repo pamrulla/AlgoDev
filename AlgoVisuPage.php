@@ -54,7 +54,15 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-2">
+                <?php $colors = ['purple-gradient', 'peach-gradient', 'blue-gradient', 'green-gradient']; ?>
+                <div class="text-center">
+                    <div class="card text-center text-white <?php echo $colors[mt_rand(0, count($colors)-1)]; ?>" style="width: 320px;">  
+					    <em id="state-comment"><?php echo the_title(); ?></em>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
                     <div class="dropup">
                       <button class="btn btn-default dropdown-toggle" type="button" id="actionsdropup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Actions
@@ -67,31 +75,31 @@
                       </ul>
                     </div>
                 </div>
-                <div class="col-md-10">
-                    <div id="controls-area" class="text-center">
+                <div class="col-md-8">
+                    <div id="controls-area" class="text-center1">
                     <div class="player">
                         
-                        <button type="button" id="button_fbw" class="btn" onclick='buttonRewindPress()'>
+                        <button type="button" id="button_fbw" class="btn btn-xs" onclick='buttonRewindPress()'>
                           <i class="fa fa-fast-backward"></i>
                         </button>
 
-                        <button type="button" id="button_bw" class="btn" onclick='buttonBackPress()'>
+                        <button type="button" id="button_bw" class="btn btn-xs" onclick='buttonBackPress()'>
                           <i class="fa fa-backward"></i>
                         </button>
 
-                        <button type="button" id="button_play" class="btn" onclick='buttonPlayPress()'>
+                        <button type="button" id="button_play" class="btn btn-xs" onclick='buttonPlayPress()'>
                           <i class="fa fa-play"></i>
                         </button>
 
-                        <button type="button" id="button_stop" class="btn" onclick='buttonStopPress()'>
+                        <button type="button" id="button_stop" class="btn btn-xs" onclick='buttonStopPress()'>
                           <i class="fa fa-stop"></i>
                         </button>
 
-                        <button type="button" id="button_fw" class="btn" onclick='buttonForwardPress()'>
+                        <button type="button" id="button_fw" class="btn btn-xs" onclick='buttonForwardPress()'>
                           <i class="fa fa-forward"></i>
                         </button>
 
-                        <button type="button" id="button_ffw" class="btn" onclick='buttonFastforwardPress()'>
+                        <button type="button" id="button_ffw" class="btn btn-xs" onclick='buttonFastforwardPress()'>
                           <i class="fa fa-fast-forward"></i>
                         </button>
                         

@@ -7,6 +7,7 @@ class SingleState
     constructor()
     {
         this.Nodes = [];
+        this.text = "state text is empty";
     }
     
     AddANode(n)

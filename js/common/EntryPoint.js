@@ -20,7 +20,8 @@ function InitializeController(inputs = null) {
         controller = new Sort(inputs);
         console.log(controller);
         ProcessRender(controller);
-        ProcessSorting(controller);
+        var type = window['typename'];
+        controller.ProcessSorting(type);
     }
     else if(window['topic'] == "Stack"){
         controller = new Stack(inputs);
@@ -40,14 +41,6 @@ function ProcessRender(controller) {
     if(controller != null){
         RenderEvents(controller.UIOptions);
         RenderData(controller.Nodes);
-    }
-}
-
-function ProcessSorting(controller) {
-    var type = window['typename'];
-    if(type == "BubbleSort")
-    {
-        controller.BubbleSort();
     }
 }
 

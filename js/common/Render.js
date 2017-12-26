@@ -135,6 +135,7 @@ async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame =
     for(var i = currentState; i < states.length; i++)
     {
         currentState = i;
+        $("#state-comment").html(states[i].text);
         for(var j=0; j<states[i].Nodes.length; j++)
         {
             if(states[i].Nodes[j].isUpdated)
@@ -202,7 +203,7 @@ async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame =
         }
         
         if(state == 'play' || state == 'resume  ') {
-            await sleep(1000);
+            await sleep(3000);
         }
         else if(state == 'stop') {
             currentState = 0;

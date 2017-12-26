@@ -227,6 +227,10 @@ blockquote{
   position: fixed;
 }
 
+.text-white {
+    color: #fff!important;
+}
+
 /* Ceter modal vertically */
 .modal {
   text-align: center;
@@ -246,3 +250,4 @@ blockquote{
   text-align: left;
   vertical-align: middle;
 }
+
