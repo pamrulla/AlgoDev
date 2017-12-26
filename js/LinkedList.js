@@ -11,24 +11,12 @@
 
 class LinkedList
 {
-    constructor(customValues)
-    {
-        if(isNaN(customValues))
-        {
-            var dfv = "5, 4, 3";
-            this.dataset = dfv.split(',').map(function(item) {
-                return parseInt(item, 10);
-            });
-        }
-        else
-        {
-            this.dataset = customValues.split(',').map(function(item) {
-                return parseInt(item, 10);
-            });
-        }
-        
+    constructor(customValues) {
+        this.dataset = [];
         this.Nodes = [];
         this.States = [];
+        this.UIOptions = [];
+        
         this.maxNodes = 6;
         this.nodeHeight = 30;
         this.widthPerNode = (width - this.maxNodes - 1) / ((this.maxNodes * 2)-1);
@@ -39,11 +27,42 @@ class LinkedList
         
         this.NumberOfSVGNodesPerListNode = 3;
         
+        this.ProcessInput(customValues);
         this.init();
+        this.UpdateUIOptions();
     }
     
-    init()
-    {
+    UpdateUIOptions() {
+        this.UIOptions.push({
+                'name': 'Create', 
+                'type': 'Input', 
+                'inputs': ['Values']
+            },
+                {'name': 'InsertAtEnd', 
+                'type': 'Input-Event', 
+                'inputs': ['Value']
+            });
+    }
+    
+    ProcessInput(customValues) {
+        if(customValues == null)
+        {
+            //var dfv = "26, 17, 48, 30, 10, 36, 1, 17, 28, 44, 26, 26, 49";
+            var dfv = "5, 4, 3, 2, 1";
+            this.dataset = dfv.split(',').map(function(item) {
+                return parseInt(item, 10);
+            });
+        }
+        else
+        {
+            console.log(customValues);
+            this.dataset = customValues.split(',').map(function(item) {
+                return parseInt(item, 10);
+            });
+        }
+    }
+    
+    init() {
         var nodes = this.dataset.length;
         
         var offset = 0;
@@ -101,8 +120,17 @@ class LinkedList
         }
     }
     
-    InsertInitialState()
-    {
+    ProcessAction(idx, inputs) {
+        if(this.UIOptions[idx].name == "Create") {
+            return true;
+        }
+        else if(this.UIOptions[idx].name == "InsertAtEnd") {
+            this.InsertAtEnd(parseInt(inputs[0]));
+            return true;
+        }
+    }    
+    
+    InsertInitialState() {
         //insert a state
         var state = new SingleState();
         for(var i = 0; i < this.Nodes.length; i++)
@@ -112,8 +140,7 @@ class LinkedList
         this.States.push(state);
     }
     
-    InsertStateSelectedNodes(index)
-    {
+    InsertStateSelectedNodes(index) {
         //insert a state
         var st = new SingleState();
         for(var k = 0; k < this.Nodes.length; k++)
@@ -128,8 +155,7 @@ class LinkedList
         this.States.push(st);
     }
     
-    InsertStateFoundFinalNode(index)
-    {
+    InsertStateFoundFinalNode(index) {
         //insert a state
         var st = new SingleState();
         for(var k = 0; k < this.Nodes.length; k++)
@@ -144,8 +170,7 @@ class LinkedList
         this.States.push(st);
     }
     
-    CreateNewNode(number)
-    {
+    CreateNewNode(number) {
         var x = width / 4;
         var y = height /2;// - this.nodeHeight;
         
@@ -186,8 +211,7 @@ class LinkedList
         this.Nodes.push(n1);
     }
     
-    InserStateForNewLink(idx)
-    {
+    InserStateForNewLink(idx) {
         this.CreateLink(idx);
         
         //insert a state
@@ -200,8 +224,7 @@ class LinkedList
         this.States.push(st);
     }
     
-    CreateLink(idx)
-    {
+    CreateLink(idx) {
         var parentIdx = idx;
         var newIdx = this.Nodes.length - 2;
         
@@ -220,8 +243,7 @@ class LinkedList
         
     }
     
-    ReArrangeList(number)
-    {
+    ReArrangeList(number) {
         this.dataset.push(number);
         
         var offset = 0;
@@ -277,8 +299,7 @@ class LinkedList
         this.States.push(st);
     }
     
-    InsertAtEnd(number)
-    {
+    InsertAtEnd(number) {
         this.States.splice(0, this.States.length);
         
         this.CreateNewNode(number);

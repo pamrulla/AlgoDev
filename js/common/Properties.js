@@ -19,7 +19,7 @@ $( document ).ready(function() {
                 .attr("width", width)
                 .attr("height", height);
 
-    defs = mainSvg.append("defs");
+        defs = mainSvg.append("defs");
         
         defs.append("marker")
             .attr("id", "Triangle")

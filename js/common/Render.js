@@ -10,16 +10,43 @@
 
 var currentState = 0;
 
-function RenderData(nodesArray)
-{
+function RenderEvents(UIOptions) {
+    var actions = $("#actionsdropup-list");
+    actions.empty();
+    
+    for(var i=0; i<UIOptions.length; i++){
+        if(UIOptions[i].type == "Input" || UIOptions[i].type == "Input-Event") {
+            actions.append('<li><a href="#" onclick="UpdateModal('+i+');" data-toggle="modal" data-target="#actionModal">'+UIOptions[i].name+'</a></li>');        
+        }
+        else {
+            actions.append('<li><a href="#" onclick="ProcessAction('+i+');">'+UIOptions[i].name+'</a></li>');
+        }
+    }
+}
+
+function RenderData(nodesArray) {
+    mainSvg.selectAll("*").remove();
+    
+    defs = mainSvg.append("defs");
+        
+    defs.append("marker")
+        .attr("id", "Triangle")
+        .attr("viewBox", "0 0 10 10")
+        .attr("refX", 1)
+        .attr("refY", 5)
+        .attr("markerWidth", 4)
+        .attr("markerHeight", 4)
+        .attr("orient", "auto")
+        .append("path")
+        .attr("d", "M 0 0 L 10 5 L 0 10 z");
+    
     for(var i=0; i < nodesArray.length; i++)
     {
         RenderOneNode(nodesArray[i]);
     }
 }
 
-function RenderOneNode(node)
-{
+function RenderOneNode(node) {
     if(node.type == "rect")
     {
         mainSvg.append("rect")
@@ -91,8 +118,7 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame = false, isPrevFrame = false, isLastFrame = false)
-{
+async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame = false, isPrevFrame = false, isLastFrame = false) {
     if(isFirstFrameToRender){
         currentState = 0;
     }
@@ -188,5 +214,5 @@ async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame =
     }
     
     currentState = 0;
-    buttonStopPress();
+    buttonStopPress(true);
 }
