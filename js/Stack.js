@@ -37,6 +37,8 @@ class Stack
                 {'name': 'Push', 
                 'type': 'Input-Event', 
                 'inputs': ['Value']
+            },
+                {'name': 'Pop', 
             });
     }
     
@@ -108,6 +110,9 @@ class Stack
         else if(this.UIOptions[idx].name == "Push") {
             this.Push(parseInt(inputs[0]));
             return true;
+        } else if(this.UIOptions[idx].name == "Pop") {
+            this.Pop();
+            return true;
         }
     }
     
@@ -146,7 +151,8 @@ class Stack
         var idx = this.Nodes.length - 1;
         this.Nodes[idx].y = this.Nodes[idx - 1].y - this.nodeHeight - 5;
         this.Nodes[idx].text.y = this.Nodes[idx].y + this.nodeHeight / 2 + 5;
-        
+        console.log("nodes y"+this.Nodes[idx].y);
+        console.log("nodes test y"+this.Nodes[idx].text.y);
         //insert a state
         var state = new SingleState();
         for(var i = 0; i < this.Nodes.length; i++)
@@ -170,6 +176,44 @@ class Stack
         }
         this.States.push(state);
     }
+    selectDeletedNode() {
+          var n = this.Nodes[this.Nodes.length-1];
+        this.Nodes.shift();
+        console.log("node in delete"+n.text.value);
+         n.color = "DodgerBlue";
+    }
+    
+     InsertStateToPop() {
+        var idx = this.Nodes.length - 1;
+        
+        this.Nodes[idx].y =  50;
+        this.Nodes[idx].text.y = this.Nodes[idx].y + this.nodeHeight / 2 + 5;
+        
+        //insert a state
+        var state = new SingleState();
+        for(var i = 0; i < this.Nodes.length; i++)
+        {
+          state.AddANode(this.Nodes[i]);
+          state.Nodes[i].isUpdated = true;
+        }
+        this.States.push(state);
+    }
+    
+    deleteFinalState(){
+        // var n = this.Nodes[this.Nodes.length-1];
+        console.log("before splice=="+this.Nodes.length);
+        this.Nodes.splice(this.Nodes.length-1,1);
+        console.log("after splice=="+this.Nodes.length);
+        console.log("nodes="+this.Nodes);
+          var state = new SingleState();
+        for(var i = 0; i < this.Nodes.length; i++)
+        {
+          state.AddANode(this.Nodes[i]);
+          state.Nodes[i].isUpdated = true;
+        }
+        this.States.push(state);
+        
+    }
     
     Push(number) {
         this.States.splice(0, this.States.length);
@@ -181,5 +225,13 @@ class Stack
         this.InsertStateToPush();
         
         this.InsertFinalState();
+    }
+    
+    Pop(number){
+        this.selectDeletedNode();
+        this.InsertInitialState();
+        this.InsertStateToPop();
+        this.deleteFinalState();
+        
     }
 }
