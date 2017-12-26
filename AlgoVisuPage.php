@@ -35,13 +35,24 @@
                 </div>
             </div>
             <div class="row">
-                <div id="controls-area" class="text-center">
-                    <div class="player text-center">
-                        <button type="button" id="button_fbw" class="btn" onclick='buttonRewindPress()'>
-                          Actions
-                        </button>
+                <div class="col-md-2">
+                    <div class="dropup">
+                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Actions
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">Create</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                      </ul>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div id="controls-area" class="text-center">
+                    <div class="player">
                         
-                        <button type="button" id="button_fbw" class="btn emptyButton" onclick='buttonRewindPress()'>
+                        <button type="button" id="button_fbw" class="btn" onclick='buttonRewindPress()'>
                           <i class="fa fa-fast-backward"></i>
                         </button>
 
@@ -66,6 +77,7 @@
                         </button>
                         
                       </div>
+                </div>
                 </div>
             </div>
 		</div>
