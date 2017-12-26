@@ -15,8 +15,8 @@ if ( !function_exists( 'hestia_child_parent_css' ) ){
             $cat = wp_get_post_terms($wp_query->post->ID, 'topics');
             if(!empty($cat))
             {
-                wp_enqueue_script('popper_script', 'https://unpkg.com/popper.js');
                 wp_enqueue_script('d3_script', 'https://d3js.org/d3.v4.min.js', array( 'jquery' ), '', true);
+                wp_enqueue_script('boostrap_cust', get_stylesheet_directory_uri() .'/js/common/bootstrap_cust.js', '', true);
                 wp_enqueue_script('Properties_script', get_stylesheet_directory_uri() .'/js/common/Properties.js', array( 'd3_script' ),'', true);
                 wp_enqueue_script('NodeText_script', get_stylesheet_directory_uri() .'/js/widgets/NodeText.js', array( 'd3_script' ),'', true);
                 wp_enqueue_script('Node_script', get_stylesheet_directory_uri() .'/js/widgets/Node.js', array( 'd3_script' ),'', true);

@@ -10,7 +10,19 @@
 
 class Sort {
     constructor(customValues) {
-        if(isNaN(customValues))
+        
+        this.dataset = [];
+        this.Nodes = [];
+        this.States = [];
+        this.UIOptions = [];
+        
+        this.ProcessInput(customValues);
+        this.init();
+        this.UpdateUIOptions();
+    }
+    
+    ProcessInput(customValues) {
+        if(customValues == null)
         {
             //var dfv = "26, 17, 48, 30, 10, 36, 1, 17, 28, 44, 26, 26, 49";
             var dfv = "5, 4, 3, 2, 1";
@@ -20,19 +32,14 @@ class Sort {
         }
         else
         {
+            console.log(customValues);
             this.dataset = customValues.split(',').map(function(item) {
                 return parseInt(item, 10);
             });
         }
-        
-        this.Nodes = [];
-        this.States = [];
-        
-        this.init();
     }
     
-    init()
-    {
+    init() {
         var nodes = this.dataset.length;
         var widthPerNode = width / nodes;
         var offset = 1;
@@ -68,8 +75,21 @@ class Sort {
         }
     }
     
-    InsertStateSortedNode(index, tempList)
-    {
+    UpdateUIOptions() {
+        this.UIOptions.push({
+                'name': 'Create', 
+                'type': 'Input', 
+                'inputs': ['Values']
+            });
+    }
+    
+    ProcessAction(idx, inputs) {
+        if(this.UIOptions[idx].name == "Create") {
+            return true;
+        }
+    }
+    
+    InsertStateSortedNode(index, tempList) {
         var st2 = new SingleState();
         for(var k = 0; k < this.Nodes.length; k++)
         {
@@ -84,8 +104,7 @@ class Sort {
         this.States.push(st2);
     }
     
-    InsertStateSwappingNodes(index, index1, tempList)
-    {
+    InsertStateSwappingNodes(index, index1, tempList) {
         //insert a state
         var st1 = new SingleState();
         for(var k = 0; k < this.Nodes.length; k++)
@@ -101,8 +120,7 @@ class Sort {
         this.States.push(st1);
     }
     
-    InsertInitialState()
-    {
+    InsertInitialState() {
         //insert a state
         var state = new SingleState();
         for(var i = 0; i < this.Nodes.length; i++)
@@ -113,8 +131,7 @@ class Sort {
         this.States.push(state);
     }
     
-    InsertStateSelectedNodes(index, index1, tempList)
-    {
+    InsertStateSelectedNodes(index, index1, tempList) {
         //insert a state
         var st = new SingleState();
         for(var k = 0; k < this.Nodes.length; k++)
@@ -133,8 +150,7 @@ class Sort {
         this.States.push(st);
     }
     
-    SwapMasterNodes(index, index1, tempList)
-    {
+    SwapMasterNodes(index, index1, tempList) {
         var t = this.Nodes[tempList[index].id].x;
         this.Nodes[tempList[index].id].x = this.Nodes[tempList[index1].id].x;
         this.Nodes[tempList[index1].id].x = t;
@@ -144,8 +160,7 @@ class Sort {
         this.Nodes[tempList[index1].id].text.x = t;
     }
     
-    BubbleSort()
-    {
+    BubbleSort() {
       var tempList = [];
       for(var i=0; i<this.dataset.length; i++)
       {
@@ -180,8 +195,7 @@ class Sort {
       
     }
     
-    SelectionSort()
-    {
+    SelectionSort() {
       var tempList = [];
       for(var i=0; i<this.dataset.length; i++)
       {

@@ -8,7 +8,6 @@
     window['topic'] = '<?php echo $terms[0]->name; ?>';
     window['typename'] = typename;
 </script>
-<h1>Khan</h1>
 	<div id="primary" class="<?php echo hestia_boxed_layout_header(); ?> page-header header-small">
 		<?php
 		if ( ( class_exists( 'WooCommerce' ) && ! is_cart() && ! is_checkout() ) || ! class_exists( 'WooCommerce' ) ) {
@@ -26,6 +25,26 @@
 		?>
 	</div>
 </header>
+<!-- Modal -->
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="actionModalLabel">
+  <div class="modal-dialog modal-sm1" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="actionModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <form id="actionModalForm">
+            
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="actionModalButton" data-dismiss="modal" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="<?php echo hestia_layout(); ?>">
 	<div class="blog-post <?php esc_attr( $class_to_add ); ?>">
 		<div class="container-fluid">
@@ -37,14 +56,14 @@
             <div class="row">
                 <div class="col-md-2">
                     <div class="dropup">
-                      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      <button class="btn btn-default dropdown-toggle" type="button" id="actionsdropup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Actions
                         <span class="caret"></span>
                       </button>
-                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#">Create</a></li>
+                      <ul class="dropdown-menu" id="actionsdropup-list" aria-labelledby="actionsdropup">
+                        <!--<li><a href="#">Create</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
+                        <li><a href="#">Separated link</a></li>-->
                       </ul>
                     </div>
                 </div>

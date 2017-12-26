@@ -11,35 +11,54 @@
 
 class Stack
 {
-    constructor(customValues)
-    {
-        if(isNaN(customValues))
-        {
-            var dfv = "5, 4, 3";
-            this.dataset = dfv.split(',').map(function(item) {
-                return parseInt(item, 10);
-            });
-        }
-        else
-        {
-            this.dataset = customValues.split(',').map(function(item) {
-                return parseInt(item, 10);
-            });
-        }
-        
+    constructor(customValues) {
+        this.dataset = [];
         this.Nodes = [];
         this.States = [];
+        this.UIOptions = [];
+        
         this.maxNodes = 10;
         this.nodeWidth = 80;
         this.nodeHeight = (height - 50) / this.maxNodes;
         this.topPadding = this.nodeHeight * 2;
         this.xCenter = (width / 2) - (this.nodeWidth/2);
         
+        this.ProcessInput(customValues);
         this.init();
+        this.UpdateUIOptions();
     }
     
-    init()
-    {
+    UpdateUIOptions() {
+        this.UIOptions.push({
+                'name': 'Create', 
+                'type': 'Input', 
+                'inputs': ['Values']
+            },
+                {'name': 'Push', 
+                'type': 'Input-Event', 
+                'inputs': ['Value']
+            });
+    }
+    
+    ProcessInput(customValues) {
+        if(customValues == null)
+        {
+            //var dfv = "26, 17, 48, 30, 10, 36, 1, 17, 28, 44, 26, 26, 49";
+            var dfv = "5, 4, 3, 2, 1";
+            this.dataset = dfv.split(',').map(function(item) {
+                return parseInt(item, 10);
+            });
+        }
+        else
+        {
+            console.log(customValues);
+            this.dataset = customValues.split(',').map(function(item) {
+                return parseInt(item, 10);
+            });
+        }
+    }
+    
+    init() {
         var nodes = this.dataset.length;
         
         var container = new Node();
@@ -82,8 +101,17 @@ class Stack
         }
     }
     
-    CreateNewNode(number)
-    {
+    ProcessAction(idx, inputs) {
+        if(this.UIOptions[idx].name == "Create") {
+            return true;
+        }
+        else if(this.UIOptions[idx].name == "Push") {
+            this.Push(parseInt(inputs[0]));
+            return true;
+        }
+    }
+    
+    CreateNewNode(number) {
         var n = new Node();
         n.x = this.xCenter;
         n.y = this.topPadding * 0.25;
@@ -103,8 +131,7 @@ class Stack
         this.Nodes.push(n);
     }
     
-    InsertInitialState()
-    {
+    InsertInitialState() {
         //insert a state
         var state = new SingleState();
         for(var i = 0; i < this.Nodes.length; i++)
@@ -115,8 +142,7 @@ class Stack
         this.States.push(state);
     }
     
-    InsertStateToPush()
-    {
+    InsertStateToPush() {
         var idx = this.Nodes.length - 1;
         this.Nodes[idx].y = this.Nodes[idx - 1].y - this.nodeHeight - 5;
         this.Nodes[idx].text.y = this.Nodes[idx].y + this.nodeHeight / 2 + 5;
@@ -131,8 +157,7 @@ class Stack
         this.States.push(state);
     }
     
-    InsertFinalState()
-    {
+    InsertFinalState() {
         var idx = this.Nodes.length - 1;
         this.Nodes[idx].color = "orange";
         
@@ -146,8 +171,7 @@ class Stack
         this.States.push(state);
     }
     
-    Push(number)
-    {
+    Push(number) {
         this.States.splice(0, this.States.length);
         
         this.CreateNewNode(number);
