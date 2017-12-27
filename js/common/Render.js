@@ -140,59 +140,75 @@ async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame =
         {
             if(states[i].Nodes[j].isUpdated)
             {
-                if(states[i].Nodes[j].type == "rect")
-                {
-                    if (! $("#"+states[i].Nodes[j].id).length){
-                        RenderOneNode(states[i].Nodes[j]);
+                if(states[i].Nodes[j].isDelete) {
+                    if(states[i].Nodes[j].type == "rect") {
+                        d3.select("#"+states[i].Nodes[j].id)
+                        .remove();
+                        d3.select("#"+states[i].Nodes[j].text.id)
+                        .remove();
                     }
-                    d3.select("#"+states[i].Nodes[j].id).transition()
-                        .attr("fill", states[i].Nodes[j].color)
-                        .attr("x", states[i].Nodes[j].x)
-                        .attr("y", states[i].Nodes[j].y).duration(1000)
-                        .duration(1000);
-                    if(states[i].Nodes[j].text.id != "")
-                    {
-                        d3.select("#"+states[i].Nodes[j].text.id).transition()
-                            .attr("fill", states[i].Nodes[j].text.color)
-                            .attr("x", states[i].Nodes[j].text.x)
-                            .attr("y", states[i].Nodes[j].text.y)
-                            .attr("text-anchor", "middle")
-                            .duration(1000);
+                    else if(states[i].Nodes[j].type == "circle") {
+                        d3.select("#"+states[i].Nodes[j].id)
+                        .remove();
+                        d3.select("#"+states[i].Nodes[j].text.id)
+                        .remove();
                     }
                 }
-                else if(states[i].Nodes[j].type == "circle")
-                {
-                    if (! $("#"+states[i].Nodes[j].id).length){
-                        RenderOneNode(states[i].Nodes[j]);
-                    }
-                    d3.select("#"+states[i].Nodes[j].id).transition()
-                        .attr("fill", states[i].Nodes[j].color)
-                        .attr("cx", states[i].Nodes[j].x)
-                        .attr("cy", states[i].Nodes[j].y).duration(1000)
-                        .duration(1000);
-                        
-                    if(states[i].Nodes[j].text.id != "")
+                else {
+                    if(states[i].Nodes[j].type == "rect")
                     {
-                        d3.select("#"+states[i].Nodes[j].text.id).transition()
-                            .attr("fill", states[i].Nodes[j].text.color)
-                            .attr("x", states[i].Nodes[j].text.x)
-                            .attr("y", states[i].Nodes[j].text.y)
-                            .attr("text-anchor", "middle")
+                        if (!$("#"+states[i].Nodes[j].id).length){
+                            RenderOneNode(states[i].Nodes[j]);
+                        }
+                        d3.select("#"+states[i].Nodes[j].id).transition()
+                            .attr("fill", states[i].Nodes[j].color)
+                            .attr("x", states[i].Nodes[j].x)
+                            .attr("y", states[i].Nodes[j].y).duration(1000)
+                            .duration(1000);
+                        if(states[i].Nodes[j].text.id != "")
+                        {
+                            d3.select("#"+states[i].Nodes[j].text.id).transition()
+                                .attr("fill", states[i].Nodes[j].text.color)
+                                .attr("x", states[i].Nodes[j].text.x)
+                                .attr("y", states[i].Nodes[j].text.y)
+                                .attr("text-anchor", "middle")
+                                .duration(1000);
+                        }
+                    }
+                    else if(states[i].Nodes[j].type == "circle")
+                    {
+                        if (! $("#"+states[i].Nodes[j].id).length){
+                            RenderOneNode(states[i].Nodes[j]);
+                        }
+                        d3.select("#"+states[i].Nodes[j].id).transition()
+                            .attr("fill", states[i].Nodes[j].color)
+                            .attr("cx", states[i].Nodes[j].x)
+                            .attr("cy", states[i].Nodes[j].y).duration(1000)
+                            .duration(1000);
+
+                        if(states[i].Nodes[j].text.id != "")
+                        {
+                            d3.select("#"+states[i].Nodes[j].text.id).transition()
+                                .attr("fill", states[i].Nodes[j].text.color)
+                                .attr("x", states[i].Nodes[j].text.x)
+                                .attr("y", states[i].Nodes[j].text.y)
+                                .attr("text-anchor", "middle")
+                                .duration(1000);
+                        }
+                    }
+                    if(states[i].Nodes[j].type == "connector")
+                    {
+                        if (! $("#"+states[i].Nodes[j].id).length){
+                            RenderOneNode(states[i].Nodes[j]);
+                        }
+
+                        d3.select("#"+states[i].Nodes[j].id).transition()
+                            .attr("x1", states[i].Nodes[j].x1)
+                            .attr("y1", states[i].Nodes[j].y1)
+                            .attr("x2", states[i].Nodes[j].x2)
+                            .attr("y2", states[i].Nodes[j].y2).duration(1000)
                             .duration(1000);
                     }
-                }
-                if(states[i].Nodes[j].type == "connector")
-                {
-                    if (! $("#"+states[i].Nodes[j].id).length){
-                        RenderOneNode(states[i].Nodes[j]);
-                    }
-                    
-                    d3.select("#"+states[i].Nodes[j].id).transition()
-                        .attr("x1", states[i].Nodes[j].x1)
-                        .attr("y1", states[i].Nodes[j].y1)
-                        .attr("x2", states[i].Nodes[j].x2)
-                        .attr("y2", states[i].Nodes[j].y2).duration(1000)
-                        .duration(1000);
                 }
             }
         }

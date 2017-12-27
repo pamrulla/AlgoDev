@@ -13,6 +13,7 @@ class Node {
         this.isUpdated = false;
         this.type = "rect";
         this.path = "";
+        this.isDelete = false;
     }
     
     Update(n)
@@ -27,5 +28,6 @@ class Node {
         this.isUpdated = n.isUpdated;
         this.type = n.type;
         this.path = n.d;
+        this.isDelete = n.isDelete;
     }
 }
