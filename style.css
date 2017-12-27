@@ -258,3 +258,7 @@ blockquote{
   vertical-align: middle;
 }
 
+.btn:not(.btn-just-icon):not(.btn-fab) .fa {
+    position: relative;
+    font-size: 12px;
+}
