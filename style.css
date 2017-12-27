@@ -39,6 +39,13 @@ blockquote{
     background: linear-gradient(40deg,#ff6ec4,#7873f5);
 }
 
+.copyright > a {
+    display: none;
+}
+.copyright:after {
+    content: "Smart Gnan @ 2018";
+}
+
 .peach-gradient {
     background: -webkit-linear-gradient(50deg,#FFD86F,#FC6262);
     background: linear-gradient(40deg,#FFD86F,#FC6262);
