@@ -47,66 +47,74 @@
 
 <div class="<?php echo hestia_layout(); ?>">
 	<div class="blog-post <?php esc_attr( $class_to_add ); ?>">
-		<div class="container-fluid">
-            <div class="row">
-                <div id="sim-area" class="text-center">
+        <?php if(is_user_logged_in()) { ?>
+            <div class="container-fluid">
+                <div class="row">
+                    <div id="sim-area" class="text-center">
 
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <?php $colors = ['purple-gradient', 'peach-gradient', 'blue-gradient', 'green-gradient']; ?>
-                <div class="text-center">
-                    <div class="card text-center text-white <?php echo $colors[mt_rand(0, count($colors)-1)]; ?>" style="width: 320px;">  
-					    <em id="state-comment"><?php echo the_title(); ?></em>
+                <div class="row">
+                    <?php $colors = ['purple-gradient', 'peach-gradient', 'blue-gradient', 'green-gradient']; ?>
+                    <div class="text-center">
+                        <div class="card text-center text-white <?php echo $colors[mt_rand(0, count($colors)-1)]; ?>" style="width: 320px;">  
+                            <em id="state-comment"><?php echo the_title(); ?></em>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="dropup">
+                          <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="actionsdropup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <i class="fa fa-bars"></i>
+                          </button>
+                          <ul class="dropdown-menu" id="actionsdropup-list" aria-labelledby="actionsdropup">
+                            <!--<li><a href="#">Create</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>-->
+                          </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div id="controls-area" class="text-center1">
+                        <div class="player">
+
+                            <button type="button" id="button_fbw" class="btn btn-sm btn-rose btn-simple" onclick='buttonRewindPress()'>
+                              <i class="fa fa-fast-backward"></i>
+                            </button>
+
+                            <button type="button" id="button_bw" class="btn btn-sm btn-dribbble btn-simple" onclick='buttonBackPress()'>
+                              <i class="fa fa-backward"></i>
+                            </button>
+
+                            <button type="button" id="button_play" class="btn btn-sm btn-facebook btn-simple" onclick='buttonPlayPress()'>
+                              <i class="fa fa-play"></i>
+                            </button>
+
+                            <button type="button" id="button_stop" class="btn btn-sm btn-youtube btn-simple" onclick='buttonStopPress()'>
+                              <i class="fa fa-stop"></i>
+                            </button>
+
+                            <button type="button" id="button_fw" class="btn btn-sm btn-twitter btn-simple" onclick='buttonForwardPress()'>
+                              <i class="fa fa-forward"></i>
+                            </button>
+
+                            <button type="button" id="button_ffw" class="btn btn-sm btn-linkedin btn-simple" onclick='buttonFastforwardPress()'>
+                              <i class="fa fa-fast-forward"></i>
+                            </button>
+
+                          </div>
+                    </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="dropup">
-                      <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="actionsdropup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <i class="fa fa-bars"></i>
-                      </button>
-                      <ul class="dropdown-menu" id="actionsdropup-list" aria-labelledby="actionsdropup">
-                        <!--<li><a href="#">Create</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>-->
-                      </ul>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div id="controls-area" class="text-center1">
-                    <div class="player">
-                        
-                        <button type="button" id="button_fbw" class="btn btn-sm btn-rose btn-simple" onclick='buttonRewindPress()'>
-                          <i class="fa fa-fast-backward"></i>
-                        </button>
-
-                        <button type="button" id="button_bw" class="btn btn-sm btn-dribbble btn-simple" onclick='buttonBackPress()'>
-                          <i class="fa fa-backward"></i>
-                        </button>
-
-                        <button type="button" id="button_play" class="btn btn-sm btn-facebook btn-simple" onclick='buttonPlayPress()'>
-                          <i class="fa fa-play"></i>
-                        </button>
-
-                        <button type="button" id="button_stop" class="btn btn-sm btn-youtube btn-simple" onclick='buttonStopPress()'>
-                          <i class="fa fa-stop"></i>
-                        </button>
-
-                        <button type="button" id="button_fw" class="btn btn-sm btn-twitter btn-simple" onclick='buttonForwardPress()'>
-                          <i class="fa fa-forward"></i>
-                        </button>
-
-                        <button type="button" id="button_ffw" class="btn btn-sm btn-linkedin btn-simple" onclick='buttonFastforwardPress()'>
-                          <i class="fa fa-fast-forward"></i>
-                        </button>
-                        
-                      </div>
-                </div>
-                </div>
-            </div>
-		</div>
+        <?php } 
+        else { 
+            echo '<div class="container"> <div class="row" style="margin: 30px;"><div class="col-md-6 col-md-offset-3">';
+            echo do_shortcode('[mepr-login-form use_redirect="true"]');
+            echo '</div></div></div>';
+        }
+        ?>
 	</div>
 </div>
 
