@@ -53,7 +53,6 @@ class Stack
         }
         else
         {
-            console.log(customValues);
             this.dataset = customValues.split(',').map(function(item) {
                 return parseInt(item, 10);
             });
@@ -151,8 +150,6 @@ class Stack
         var idx = this.Nodes.length - 1;
         this.Nodes[idx].y = this.Nodes[idx - 1].y - this.nodeHeight - 5;
         this.Nodes[idx].text.y = this.Nodes[idx].y + this.nodeHeight / 2 + 5;
-        console.log("nodes y"+this.Nodes[idx].y);
-        console.log("nodes test y"+this.Nodes[idx].text.y);
         //insert a state
         var state = new SingleState();
         for(var i = 0; i < this.Nodes.length; i++)
@@ -177,16 +174,21 @@ class Stack
         this.States.push(state);
     }
     selectDeletedNode() {
-          var n = this.Nodes[this.Nodes.length-1];
-        this.Nodes.shift();
-        console.log("node in delete"+n.text.value);
+         var n = this.Nodes[this.Nodes.length-1];
          n.color = "DodgerBlue";
+         var state = new SingleState();
+        for(var i = 0; i < this.Nodes.length; i++)
+        {
+          state.AddANode(this.Nodes[i]);
+          state.Nodes[i].isUpdated = true;
+        }
+        this.States.push(state);
     }
     
      InsertStateToPop() {
         var idx = this.Nodes.length - 1;
         
-        this.Nodes[idx].y =  50;
+        this.Nodes[idx].y =  this.topPadding * 0.25;
         this.Nodes[idx].text.y = this.Nodes[idx].y + this.nodeHeight / 2 + 5;
         
         //insert a state
@@ -200,17 +202,18 @@ class Stack
     }
     
     deleteFinalState(){
-        // var n = this.Nodes[this.Nodes.length-1];
-        console.log("before splice=="+this.Nodes.length);
-        this.Nodes.splice(this.Nodes.length-1,1);
-        console.log("after splice=="+this.Nodes.length);
-        console.log("nodes="+this.Nodes);
-          var state = new SingleState();
+        var state = new SingleState();
         for(var i = 0; i < this.Nodes.length; i++)
         {
+            var val = this.Nodes[i];
+           
           state.AddANode(this.Nodes[i]);
           state.Nodes[i].isUpdated = true;
+          if(i == this.Nodes.length-1) {
+              state.Nodes[i].isDelete = true;
+          }
         }
+        this.Nodes.pop();
         this.States.push(state);
         
     }
@@ -228,9 +231,14 @@ class Stack
     }
     
     Pop(number){
-        this.selectDeletedNode();
+        this.States.splice(0, this.States.length);
+        
         this.InsertInitialState();
+        
+        this.selectDeletedNode();
+       
         this.InsertStateToPop();
+        
         this.deleteFinalState();
         
     }
