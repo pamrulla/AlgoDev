@@ -39,6 +39,10 @@ class Stack
                 'inputs': ['Value']
             },
                 {'name': 'Pop', 
+            },
+                {'name': 'Peek', 
+            },
+                {'name': 'isEmpty', 
             });
     }
     
@@ -112,6 +116,12 @@ class Stack
         } else if(this.UIOptions[idx].name == "Pop") {
             this.Pop();
             return true;
+        }else if(this.UIOptions[idx].name == "Peek") {
+            this.Peek();
+            return true;
+        }else if(this.UIOptions[idx].name == "isEmpty") {
+            this.isEmpty();
+            return true;
         }
     }
     
@@ -143,7 +153,9 @@ class Stack
           state.AddANode(this.Nodes[i]);
           state.Nodes[i].isUpdated = true;
         }
+        state.text = "Initial order of values";
         this.States.push(state);
+        
     }
     
     InsertStateToPush() {
@@ -157,6 +169,7 @@ class Stack
           state.AddANode(this.Nodes[i]);
           state.Nodes[i].isUpdated = true;
         }
+        state.text = "Selected value is   "+idx.text.value;
         this.States.push(state);
     }
     
@@ -171,6 +184,7 @@ class Stack
           state.AddANode(this.Nodes[i]);
           state.Nodes[i].isUpdated = true;
         }
+        state.text = "Selected value is   "+idx.text.value;
         this.States.push(state);
     }
     selectDeletedNode() {
@@ -182,6 +196,7 @@ class Stack
           state.AddANode(this.Nodes[i]);
           state.Nodes[i].isUpdated = true;
         }
+        state.text = "Selected value is   "+n.text.value;
         this.States.push(state);
     }
     
@@ -198,6 +213,7 @@ class Stack
           state.AddANode(this.Nodes[i]);
           state.Nodes[i].isUpdated = true;
         }
+         state.text = "Selected value is   "+idx.text.value;
         this.States.push(state);
     }
     
@@ -213,7 +229,9 @@ class Stack
               state.Nodes[i].isDelete = true;
           }
         }
+        state.text = "Deleted value from stack";
         this.Nodes.pop();
+         
         this.States.push(state);
         
     }
@@ -230,7 +248,7 @@ class Stack
         this.InsertFinalState();
     }
     
-    Pop(number){
+    Pop(){
         this.States.splice(0, this.States.length);
         
         this.InsertInitialState();
@@ -241,5 +259,37 @@ class Stack
         
         this.deleteFinalState();
         
+    }
+    
+    Peek(){
+        this.States.splice(0, this.States.length);
+        
+        this.InsertInitialState();
+        
+        this.selectDeletedNode();
+        
+        this.InsertStateToPop();
+        
+        this.InsertStateToPush();
+        
+        this.InsertFinalState();
+        
+    }
+    
+    isEmpty(){
+        var nodeSize = this.Nodes.length;
+        var state = new SingleState();
+        for(var i = 0; i < this.Nodes.length; i++)
+            {
+              var val = this.Nodes[i];
+              state.AddANode(this.Nodes[i]);
+              state.Nodes[i].isUpdated = true;
+            }  
+        if(nodeSize <= 0){
+             state.text = "Stack is empty";
+        }else{
+            state.text = "Size of stack is  "+nodeSize;
+        }
+        this.States.push(state);
     }
 }
