@@ -1,4 +1,4 @@
-<?php /* Template Name: AlgoVisu */ ?>
+<?php /* Template Name: AlgoVisuFree */ ?>
 <?php get_header(); ?>
 <script type="text/javascript">
     var typename = '<?php echo the_title(); ?>';
@@ -55,11 +55,7 @@
 ?>
 <div class="<?php echo hestia_layout(); ?>">
 	<div class="blog-post <?php esc_attr( $class_to_add ); ?>">
-            <?php echo do_shortcode('[mepr-active rules="87" ifallowed="show" unauth="message" ]' . $content . '[/mepr-active]'); ?>
-            
-            <div class="container"><div class="row" style="margin: 30px;"><div class="col-md-6 col-md-offset-3">
-            <?php echo do_shortcode('[mepr-active rules="87" ifallowed="show" unauth="login"][/mepr-active]'); ?>
-            </div></div></div>
+            <?php echo $content; ?>            
 	</div>
 </div>
 
