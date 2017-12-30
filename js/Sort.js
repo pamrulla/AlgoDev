@@ -32,7 +32,6 @@ class Sort {
         }
         else
         {
-            console.log(customValues);
             this.dataset = customValues.split(',').map(function(item) {
                 return parseInt(item, 10);
             });
@@ -241,7 +240,11 @@ class Sort {
     ProcessSorting(type) {
         if(type == "BubbleSort")
         {
-            controller.BubbleSort();
+            this.BubbleSort();
+        }
+        else if(type == "SelectionSort")
+        {
+            this.SelectionSort();
         }
     }
 }

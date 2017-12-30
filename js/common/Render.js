@@ -19,7 +19,7 @@ function RenderEvents(UIOptions) {
             actions.append('<li><a href="#" onclick="UpdateModal('+i+');" data-toggle="modal" data-target="#actionModal">'+UIOptions[i].name+'</a></li>');        
         }
         else {
-            actions.append('<li><a href="#" onclick="ProcessAction('+i+');">'+UIOptions[i].name+'</a></li>');
+            actions.append('<li><a href="#!" onclick="ProcessAction('+i+');">'+UIOptions[i].name+'</a></li>');
         }
     }
 }

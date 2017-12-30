@@ -18,7 +18,6 @@ $( document ).ready(function() {
 function InitializeController(inputs = null) {
     if(window['topic'] == "Sort"){
         controller = new Sort(inputs);
-        console.log(controller);
         ProcessRender(controller);
         var type = window['typename'];
         controller.ProcessSorting(type);
@@ -123,6 +122,7 @@ function UpdateModal(idx) {
 }
 
 function ProcessAction(idx) {
+    
     var inputs = [];
     if(controller.UIOptions[idx].type == "Input" || controller.UIOptions[idx].type == "Input-Event") {
         for(var j = 0; j < controller.UIOptions[idx].inputs.length; j++) {
