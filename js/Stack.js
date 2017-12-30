@@ -77,6 +77,7 @@ class Stack
         container.path += " V " + height;
         container.path += " H " + (container.x + this.nodeWidth + 10);
         container.path += " V " + container.y;
+        container.id = "stackContainer";
         
         this.Nodes.push(container);
         

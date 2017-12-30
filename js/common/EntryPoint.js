@@ -123,6 +123,8 @@ function UpdateModal(idx) {
 
 function ProcessAction(idx) {
     
+    buttonStopPress();
+    
     var inputs = [];
     if(controller.UIOptions[idx].type == "Input" || controller.UIOptions[idx].type == "Input-Event") {
         for(var j = 0; j < controller.UIOptions[idx].inputs.length; j++) {

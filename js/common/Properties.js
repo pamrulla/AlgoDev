@@ -16,9 +16,10 @@ $( document ).ready(function() {
 
     mainSvg = d3.select("#sim-area")
                 .append("svg")
+                .attr("id", "mainSvg")
                 .attr("width", width)
                 .attr("height", height);
-
+/*
         defs = mainSvg.append("defs");
         
         defs.append("marker")
@@ -31,5 +32,5 @@ $( document ).ready(function() {
             .attr("orient", "auto")
             .append("path")
             .attr("d", "M 0 0 L 10 5 L 0 10 z");
-
+*/
 });

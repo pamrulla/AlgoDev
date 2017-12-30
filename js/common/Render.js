@@ -9,6 +9,7 @@
 /*global $*/
 
 var currentState = 0;
+var idForDefs = "def-markers";
 
 function RenderEvents(UIOptions) {
     var actions = $("#actionsdropup-list");
@@ -27,7 +28,8 @@ function RenderEvents(UIOptions) {
 function RenderData(nodesArray) {
     mainSvg.selectAll("*").remove();
     
-    defs = mainSvg.append("defs");
+    defs = mainSvg.append("defs")
+                .attr("id", idForDefs);
         
     defs.append("marker")
         .attr("id", "Triangle")
@@ -110,7 +112,8 @@ function RenderOneNode(node) {
                 .attr("stroke", node.color)
                 .attr("stroke-width", node.width)
                 .attr("fill", "none")
-                .attr("d", node.path);
+                .attr("d", node.path)
+                .attr("id", node.id);
     }
 }
 
@@ -138,6 +141,7 @@ async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame =
         $("#state-comment").html(states[i].text);
         for(var j=0; j<states[i].Nodes.length; j++)
         {
+            CheckAndDeleteUnwantedNodes(states[i].Nodes);
             if(states[i].Nodes[j].isUpdated)
             {
                 if(states[i].Nodes[j].isDelete) {
@@ -232,4 +236,31 @@ async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame =
     
     currentState = 0;
     buttonStopPress(true);
+}
+
+function CheckAndDeleteUnwantedNodes(Nodes) {
+    var svgChildren;
+    var extraIds = [];
+    svgChildren = $("#mainSvg").children().map(function(){ return this.id; }).get();
+    for(var i = 0; i < svgChildren.length; i++) {
+        var isFound = false;
+        for(var j = 0; j < Nodes.length; j++) {
+            if(Nodes[j].id == svgChildren[i]) {
+                isFound = true;
+                break;
+            }
+            else if(Nodes[j].text != undefined && Nodes[j].text.id == svgChildren[i]) {
+                isFound = true;
+                break;
+            }
+        }
+        if(!isFound) {
+            extraIds.push(svgChildren[i]);
+        }
+    }
+    for(var i = 0; i < extraIds.length; i++) {
+        if(extraIds[i] != idForDefs) {
+            $("#"+extraIds[i]).remove();
+        }
+    }
 }
