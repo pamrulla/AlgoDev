@@ -148,7 +148,14 @@ class Sort {
                 st.Nodes[k].color = "red";
             }
         }
-        st.text = "Selecting values " + this.Nodes[tempList[index].id].text.value + " & " + this.Nodes[tempList[index1].id].text.value + " for comparison.";
+        
+        if(index1 != -1) {
+            st.text = "Selecting values " + this.Nodes[tempList[index].id].text.value + " & " + this.Nodes[tempList[index1].id].text.value + " for comparison.";
+        }
+        else {
+            st.text = "Selecting value " + this.Nodes[tempList[index].id].text.value ;
+        }
+        
         this.States.push(st);
     }
     
