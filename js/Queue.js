@@ -38,6 +38,10 @@ class Queue
                 {'name': 'Enqueue', 
                 'type': 'Input-Event', 
                 'inputs': ['Value']
+            },
+            {'name': 'Dequeue', 
+                'type': 'Event', 
+                'inputs': []
             });
     }
     
@@ -45,7 +49,7 @@ class Queue
         if(customValues == null)
         {
             //var dfv = "26, 17, 48, 30, 10, 36, 1, 17, 28, 44, 26, 26, 49";
-            var dfv = "5, 4, 3, 2, 1";
+            var dfv = "5, 4, 3";
             this.dataset = dfv.split(',').map(function(item) {
                 return parseInt(item, 10);
             });
@@ -75,6 +79,42 @@ class Queue
         container.path += " H " + (width - this.leftRightPadding - this.leftRightPadding);
         
         this.Nodes.push(container);
+        
+        var nn = new Node();
+            nn.x = this.leftRightPadding;
+            nn.y = (this.topPadding + this.nodeHeight + 10);
+            nn.color = "transparent";
+            nn.width = 100;
+            nn.height = 100;
+            nn.id = "head-front";
+            
+            nn.text.value = "Head/Front";
+            nn.text.color = "black";
+            nn.text.font = "sanserif";
+            nn.text.size = "14";
+            nn.text.x = this.leftRightPadding;
+            nn.text.y = nn.y + this.nodeRadius / 2 - 3;
+            nn.text.id = "thead-front";
+            
+            this.Nodes.push(nn);
+            
+        var nn1 = new Node();
+            nn1.x = this.leftRightPadding;
+            nn1.y = (this.topPadding + this.nodeHeight + 10);
+            nn1.color = "transparent";
+            nn1.width = 100;
+            nn1.height = 100;
+            nn1.id = "tail-rear";
+            
+            nn1.text.value = "Tail/Rear";
+            nn1.text.color = "black";
+            nn1.text.font = "sanserif";
+            nn1.text.size = "14";
+            nn1.text.x = (width - this.leftRightPadding - this.leftRightPadding)
+            nn1.text.y = nn.y + this.nodeRadius / 2 - 3;
+            nn1.text.id = "ttail-rear";
+            
+            this.Nodes.push(nn1);
         
         var offset = this.leftRightPadding + this.nodeRadius;
         var yPos = this.topPadding + this.nodeHeight / 2;
@@ -112,6 +152,10 @@ class Queue
             this.Enqueue(parseInt(inputs[0]));
             return true;
         }
+        else if(this.UIOptions[idx].name == "Dequeue") {
+            this.Dequeue(parseInt(inputs[0]));
+            return true;
+        }
     }
     
     CreateNewNode(number) {
@@ -136,6 +180,15 @@ class Queue
         n.text.id = "tbar-" + this.Nodes.length;
             
         this.Nodes.push(n);
+        
+        var state = new SingleState();
+        for(var i = 0; i < this.Nodes.length; i++)
+        {
+          state.AddANode(this.Nodes[i]);
+          state.Nodes[i].isUpdated = true;
+        }
+        state.text = "Added new node " + number;
+        this.States.push(state);
     }
     
     InsertInitialState() {
@@ -146,6 +199,7 @@ class Queue
           state.AddANode(this.Nodes[i]);
           state.Nodes[i].isUpdated = true;
         }
+        state.text = "Initial state of Queue";
         this.States.push(state);
     }
     
@@ -161,6 +215,7 @@ class Queue
           state.AddANode(this.Nodes[i]);
           state.Nodes[i].isUpdated = true;
         }
+        state.text = "Inserting new value " + this.Nodes[idx].text.value + " from tail.";
         this.States.push(state);
     }
     
@@ -175,17 +230,85 @@ class Queue
           state.AddANode(this.Nodes[i]);
           state.Nodes[i].isUpdated = true;
         }
+        state.text = "Final State of Queue."
+        this.States.push(state);
+    }
+    
+    SelectHeadNode() {
+        var idx = 3;
+        this.Nodes[idx].color = "dodgerblue";
+        
+        //insert a state
+        var state = new SingleState();
+        for(var i = 0; i < this.Nodes.length; i++)
+        {
+          state.AddANode(this.Nodes[i]);
+          state.Nodes[i].isUpdated = true;
+        }
+        state.text = "Selecting value " + this.Nodes[idx].text.value + " at head of queue."
+        this.States.push(state);
+    }
+    
+    InsertStateToPop() {
+        var idx = 3;
+        for(var i = this.Nodes.length-1; i > idx; i--) {
+            this.Nodes[i].x = this.Nodes[i-1].x;
+            this.Nodes[i].text.x = this.Nodes[i-1].text.x;
+        }
+        
+        this.Nodes[idx].x = this.nodeRadius;
+        this.Nodes[idx].text.x = this.nodeRadius;
+        
+        //insert a state
+        var state = new SingleState();
+        for(i = 0; i < this.Nodes.length; i++)
+        {
+          state.AddANode(this.Nodes[i]);
+          state.Nodes[i].isUpdated = true;
+        }
+        state.text = "Removing head node from queue."
         this.States.push(state);
     }
     
     Enqueue(number) {
         this.States.splice(0, this.States.length);
         
+        this.InsertInitialState();
+        
         this.CreateNewNode(number);
+        
+        this.InsertStateToPush();
+        
+        this.InsertFinalState();
+    }
+    
+    DeletePopNode() {
+        var idx = 3;
+        
+        this.Nodes[idx].isDelete = true;
+        
+        //insert a state
+        var state = new SingleState();
+        for(var i = 0; i < this.Nodes.length; i++)
+        {
+          state.AddANode(this.Nodes[i]);
+          state.Nodes[i].isUpdated = true;
+        }
+        state.text = "Delete head node."
+        this.States.push(state);
+        this.Nodes.splice(idx, 1);
+    }
+    
+    Dequeue(number) {
+        this.States.splice(0, this.States.length);
         
         this.InsertInitialState();
         
-        this.InsertStateToPush();
+        this.SelectHeadNode(number);
+        
+        this.InsertStateToPop();
+        
+        this.DeletePopNode();
         
         this.InsertFinalState();
     }
