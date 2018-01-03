@@ -25,7 +25,7 @@ class Queue
         this.padding = 2;
         this.nodeRadius = (((width - this.leftRightPadding - this.leftRightPadding) / this.maxNodes))/2 - this.padding;
         
-        this.ProcessInput(customValues);
+        this.dataset = ProcessInput(customValues, 3);
         this.init();
         this.UpdateUIOptions();
     }
@@ -44,24 +44,6 @@ class Queue
                 'type': 'Event', 
                 'inputs': []
             });
-    }
-    
-    ProcessInput(customValues) {
-        if(customValues == null)
-        {
-            //var dfv = "26, 17, 48, 30, 10, 36, 1, 17, 28, 44, 26, 26, 49";
-            var dfv = "5, 4, 3";
-            this.dataset = dfv.split(',').map(function(item) {
-                return parseInt(item, 10);
-            });
-        }
-        else
-        {
-            console.log(customValues);
-            this.dataset = customValues.split(',').map(function(item) {
-                return parseInt(item, 10);
-            });
-        }
     }
     
     init() {
@@ -88,6 +70,7 @@ class Queue
         container.path += " H " + (width - this.leftRightPadding - this.leftRightPadding);
         container.path += " M " + this.leftRightPadding + " " + (this.topPadding + this.nodeHeight);
         container.path += " H " + (width - this.leftRightPadding - this.leftRightPadding);
+        container.id = "queue-container";
         
         this.Nodes.push(container);
         

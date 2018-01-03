@@ -24,7 +24,7 @@ class Stack
         this.topPadding = this.nodeHeight * 2;
         this.xCenter = (width / 2) - (this.nodeWidth/2);
         
-        this.ProcessInput(customValues);
+        this.dataset = ProcessInput(customValues, 3);
         this.init();
         this.UpdateUIOptions();
     }
@@ -45,23 +45,6 @@ class Stack
             },
                 {'name': 'isEmpty', 
             });
-    }
-    
-    ProcessInput(customValues) {
-        if(customValues == null)
-        {
-            //var dfv = "26, 17, 48, 30, 10, 36, 1, 17, 28, 44, 26, 26, 49";
-            var dfv = "5, 4, 3, 2, 1";
-            this.dataset = dfv.split(',').map(function(item) {
-                return parseInt(item, 10);
-            });
-        }
-        else
-        {
-            this.dataset = customValues.split(',').map(function(item) {
-                return parseInt(item, 10);
-            });
-        }
     }
     
     init() {

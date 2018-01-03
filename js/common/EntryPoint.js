@@ -166,3 +166,27 @@ function IsInvalidNumber(number) {
         }
     }
 }
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
+function ProcessInput(customValues, numberOfDefault) {
+    var dataset = [];
+    if(customValues == null)
+    {
+        while(numberOfDefault--) {
+            dataset.push(getRandomInt(0, 50));
+        }
+    }
+    else
+    {
+        dataset = customValues.split(',').map(function(item) {
+            return parseInt(item, 10);
+        });
+    }
+    
+    return dataset;
+}

@@ -28,7 +28,7 @@ class LinkedList
                 
         this.NumberOfSVGNodesPerListNode = 3;
         
-        this.ProcessInput(customValues);
+        this.dataset = ProcessInput(customValues, 3);
         this.init();
         this.UpdateUIOptions();
     }
@@ -67,22 +67,6 @@ class LinkedList
                 'type': 'Input-Event', 
                 'inputs': ['Value', ]
             });
-    }
-    
-    ProcessInput(customValues) {
-        if(customValues == null)
-        {
-            var dfv = "5, 4, 3";
-            this.dataset = dfv.split(',').map(function(item) {
-                return parseInt(item, 10);
-            });
-        }
-        else
-        {
-            this.dataset = customValues.split(',').map(function(item) {
-                return parseInt(item, 10);
-            });
-        }
     }
     
     init() {
