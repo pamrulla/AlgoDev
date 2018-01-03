@@ -10,6 +10,7 @@
 
 var currentState = 0;
 var idForDefs = "def-markers";
+var speed = 500;
 
 function RenderEvents(UIOptions) {
     var actions = $("#actionsdropup-list");
@@ -51,39 +52,44 @@ function RenderData(nodesArray) {
 function RenderOneNode(node) {
     if(node.type == "rect")
     {
-        mainSvg.append("rect")
-            .attr("x", node.x)
-            .attr("y", node.y)
-            .attr("width", node.width)
-            .attr("height", node.height)
-            .attr("fill", node.color)
-            .attr("id", node.id);
-            
+        if(node.id != '') {
+            mainSvg.append("rect")
+                .attr("x", node.x)
+                .attr("y", node.y)
+                .attr("width", node.width)
+                .attr("height", node.height)
+                .attr("fill", node.color)
+                .attr("id", node.id);
+        }
         // d3.select("#"+node.id).transition()
         //                     .attr("y", node.y)
         //                     .ease(d3.easeBounce)
         //                     .duration(1000);
-            
-        mainSvg.append("text")
-            .text(node.text.value)
-            .attr("text-anchor", "middle")
-            .attr("x", node.text.x)
-            .attr("y", node.text.y)
-            .attr("font-family", node.text.font)
-            .attr("font-size", node.text.size)
-            .attr("fill", node.text.color)
-            .attr("id", node.text.id);
+        if(node.text.id != '') {    
+            mainSvg.append("text")
+                .text(node.text.value)
+                .attr("text-anchor", "middle")
+                .attr("x", node.text.x)
+                .attr("y", node.text.y)
+                .attr("font-family", node.text.font)
+                .attr("font-size", node.text.size)
+                .attr("fill", node.text.color)
+                .attr("id", node.text.id);
+        }
     }
     if(node.type == "circle")
     {
-        mainSvg.append("circle")
+        if(node.id != '') {
+            mainSvg.append("circle")
             .attr("cx", node.x)
             .attr("cy", node.y)
             .attr("r", node.width)
             .attr("fill", node.color)
             .attr("id", node.id);
+        }
             
-        mainSvg.append("text")
+        if(node.text.id != '') {
+            mainSvg.append("text")
             .text(node.text.value)
             .attr("text-anchor", "middle")
             .attr("x", node.text.x)
@@ -92,10 +98,12 @@ function RenderOneNode(node) {
             .attr("font-size", node.text.size)
             .attr("fill", node.text.color)
             .attr("id", node.text.id);
+        }
     }
     else if(node.type == "connector")
     {
-        mainSvg.append("line")
+        if(node.id != '') {
+            mainSvg.append("line")
                 .attr("x1", node.x1)
                 .attr("y1", node.y1)
                 .attr("x2", node.x2)
@@ -104,16 +112,19 @@ function RenderOneNode(node) {
                 .attr("stroke", node.color)
                 .attr("id", node.id)
                 .attr("marker-end", "url(#Triangle)");
+        }
                 // .attr("marker-start", "url(#MCircle)");
     }
     else if(node.type == "path")
     {
-        mainSvg.append("path")
+        if(node.id != '') {
+            mainSvg.append("path")
                 .attr("stroke", node.color)
                 .attr("stroke-width", node.width)
                 .attr("fill", "none")
                 .attr("d", node.path)
                 .attr("id", node.id);
+        }
     }
 }
 
@@ -137,10 +148,23 @@ async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame =
     
     for(var i = currentState; i < states.length; i++)
     {
+        if(isFirstFrameToRender || isNextFrame || isPrevFrame || isLastFrame) {
+            return;
+        }
+        
+        if(state == 'play' || state == 'resume  ') {
+            await sleep(speed);
+        }
+        else if(state == 'stop') {
+            currentState = 0;
+            return;
+        }
+        
         currentState = i;
         $("#state-comment").html(states[i].text);
         for(var j=0; j<states[i].Nodes.length; j++)
         {
+            console.log("Enterd");
             CheckAndDeleteUnwantedNodes(states[i].Nodes);
             if(states[i].Nodes[j].isUpdated)
             {
@@ -148,13 +172,23 @@ async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame =
                     if(states[i].Nodes[j].type == "rect") {
                         d3.select("#"+states[i].Nodes[j].id)
                         .remove();
-                        d3.select("#"+states[i].Nodes[j].text.id)
-                        .remove();
+                        
+                        if(states[i].Nodes[j].text.id != "") {
+                            d3.select("#"+states[i].Nodes[j].text.id)
+                            .remove();
+                        }
+                        
                     }
                     else if(states[i].Nodes[j].type == "circle") {
                         d3.select("#"+states[i].Nodes[j].id)
                         .remove();
-                        d3.select("#"+states[i].Nodes[j].text.id)
+                        if(states[i].Nodes[j].text.id != "") {
+                            d3.select("#"+states[i].Nodes[j].text.id)
+                            .remove();
+                        }
+                    }
+                    else if(states[i].Nodes[j].type == "connector") {
+                        d3.select("#"+states[i].Nodes[j].id)
                         .remove();
                     }
                 }
@@ -167,8 +201,8 @@ async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame =
                         d3.select("#"+states[i].Nodes[j].id).transition()
                             .attr("fill", states[i].Nodes[j].color)
                             .attr("x", states[i].Nodes[j].x)
-                            .attr("y", states[i].Nodes[j].y).duration(1000)
-                            .duration(1000);
+                            .attr("y", states[i].Nodes[j].y).duration(speed / 2)
+                            .duration(speed / 2);
                         if(states[i].Nodes[j].text.id != "")
                         {
                             d3.select("#"+states[i].Nodes[j].text.id).transition()
@@ -176,7 +210,7 @@ async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame =
                                 .attr("x", states[i].Nodes[j].text.x)
                                 .attr("y", states[i].Nodes[j].text.y)
                                 .attr("text-anchor", "middle")
-                                .duration(1000);
+                                .duration(speed / 2);
                         }
                     }
                     else if(states[i].Nodes[j].type == "circle")
@@ -187,8 +221,8 @@ async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame =
                         d3.select("#"+states[i].Nodes[j].id).transition()
                             .attr("fill", states[i].Nodes[j].color)
                             .attr("cx", states[i].Nodes[j].x)
-                            .attr("cy", states[i].Nodes[j].y).duration(1000)
-                            .duration(1000);
+                            .attr("cy", states[i].Nodes[j].y).duration(speed / 2)
+                            .duration(speed / 2);
 
                         if(states[i].Nodes[j].text.id != "")
                         {
@@ -197,7 +231,7 @@ async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame =
                                 .attr("x", states[i].Nodes[j].text.x)
                                 .attr("y", states[i].Nodes[j].text.y)
                                 .attr("text-anchor", "middle")
-                                .duration(1000);
+                                .duration(speed / 2);
                         }
                     }
                     if(states[i].Nodes[j].type == "connector")
@@ -210,27 +244,11 @@ async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame =
                             .attr("x1", states[i].Nodes[j].x1)
                             .attr("y1", states[i].Nodes[j].y1)
                             .attr("x2", states[i].Nodes[j].x2)
-                            .attr("y2", states[i].Nodes[j].y2).duration(1000)
-                            .duration(1000);
+                            .attr("y2", states[i].Nodes[j].y2).duration(speed / 2)
+                            .duration(speed / 2);
                     }
                 }
             }
-        }
-        
-        
-        if(isFirstFrameToRender || isNextFrame || isPrevFrame || isLastFrame) {
-            return;
-        }
-        
-        if(state == 'play' || state == 'resume  ') {
-            await sleep(3000);
-        }
-        else if(state == 'stop') {
-            currentState = 0;
-            return;
-        }
-        else {
-            return;
         }
     }
     

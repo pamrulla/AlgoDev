@@ -12,6 +12,7 @@ class Connector
         this.id = "";
         this.isUpdated = false;
         this.type = "connector";
+        this.isDelete = false;
     }
     
     Update(n)
@@ -23,7 +24,8 @@ class Connector
         this.color = n.color;
         this.width = n.width;
         this.id = n.id;
-        this.isUpdated = false;
+        this.isUpdated = n.isUpdated;
         this.type = n.type;
+        this.isDelete = n.isDelete;
     }
 }
