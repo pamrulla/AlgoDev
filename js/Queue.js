@@ -297,6 +297,8 @@ class Queue
         this.InsertStateToPush();
         
         this.InsertFinalState();
+        
+        return true;
     }
     
     DeletePopNode() {

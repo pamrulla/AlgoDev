@@ -271,6 +271,8 @@ class Stack
         this.InsertStateToPush();
         
         this.InsertFinalState();
+        
+        return true;
     }
     
     Pop(){
@@ -292,7 +294,7 @@ class Stack
             st.text = "Stack is already emtpy!!!";
             this.States.push(st);
         }
-        
+        return true;
     }
     
     Peek(){
@@ -312,7 +314,7 @@ class Stack
             st.text = "Stack is already emtpy!!!";
             this.States.push(st);
         }       
-        
+        return true;
     }
     
     isEmpty(){
@@ -334,5 +336,7 @@ class Stack
         }
         
         this.States.push(state);
+        
+        return true;
     }
 }
