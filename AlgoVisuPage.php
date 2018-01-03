@@ -44,6 +44,21 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel">
+  <div class="modal-dialog modal-sm1" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="alert alert-danger" role="alert" id="errorModalForm">
+            
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 <?php 
     $colors = ["purple-gradient", "peach-gradient", "blue-gradient", "green-gradient"];
     $content = '<div class="container-fluid"><div class="row"><div id="sim-area" class="text-center"></div></div><div class="row"><div class="text-center"><div class="card text-center text-white ';

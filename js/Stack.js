@@ -18,6 +18,7 @@ class Stack
         this.UIOptions = [];
         
         this.maxNodes = 10;
+        this.ContainerNodes = 1;
         this.nodeWidth = 80;
         this.nodeHeight = (height - 50) / this.maxNodes;
         this.topPadding = this.nodeHeight * 2;
@@ -66,6 +67,16 @@ class Stack
     init() {
         var nodes = this.dataset.length;
         
+        if(CheckForMaxNodes(0, nodes, this.maxNodes)) {
+            return;
+        }
+        
+        for(var kk = 0; kk < this.dataset.length; kk++) {
+            if(IsInvalidNumber(this.dataset[kk])) {
+                return;
+            }
+        }
+        
         var container = new Node();
         container.x = this.xCenter - 5;
         container.y = this.topPadding;
@@ -112,17 +123,13 @@ class Stack
             return true;
         }
         else if(this.UIOptions[idx].name == "Push") {
-            this.Push(parseInt(inputs[0]));
-            return true;
+            return this.Push(parseInt(inputs[0]));
         } else if(this.UIOptions[idx].name == "Pop") {
-            this.Pop();
-            return true;
+            return this.Pop();
         }else if(this.UIOptions[idx].name == "Peek") {
-            this.Peek();
-            return true;
+            return this.Peek();
         }else if(this.UIOptions[idx].name == "isEmpty") {
-            this.isEmpty();
-            return true;
+            return this.isEmpty();
         }
     }
     
@@ -247,6 +254,14 @@ class Stack
     }
     
     Push(number) {
+        if(CheckForMaxNodes(this.Nodes.length - this.ContainerNodes, 1, this.maxNodes)) {
+            return false;
+        }
+        
+        if(IsInvalidNumber(number)) {
+            return false;
+        }
+        
         this.States.splice(0, this.States.length);
         
         this.InsertInitialState();
@@ -259,15 +274,24 @@ class Stack
     }
     
     Pop(){
+        
         this.States.splice(0, this.States.length);
         
         this.InsertInitialState();
         
-        this.selectDeletedNode();
-       
-        this.InsertStateToPop();
-        
-        this.deleteFinalState();
+        if(this.Nodes.length != this.ContainerNodes) {
+            
+            this.selectDeletedNode();
+
+            this.InsertStateToPop();
+
+            this.deleteFinalState();
+        }
+        else {
+            var st = new SingleState();
+            st.text = "Stack is already emtpy!!!";
+            this.States.push(st);
+        }
         
     }
     
@@ -275,30 +299,38 @@ class Stack
         this.States.splice(0, this.States.length);
         
         this.InsertInitialState();
+        if(this.Nodes.length != this.ContainerNodes) {
+            
+            this.selectDeletedNode();
         
-        this.selectDeletedNode();
-        
-        this.InsertFinalState();
-        this.States[this.States.length - 1].text = "The top of the stack is " + this.Nodes[this.Nodes.length - 1].text.value;
+            this.InsertFinalState();
+            
+            this.States[this.States.length - 1].text = "The top of the stack is " + this.Nodes[this.Nodes.length - 1].text.value;
+        }
+        else {
+            var st = new SingleState();
+            st.text = "Stack is already emtpy!!!";
+            this.States.push(st);
+        }       
         
     }
     
     isEmpty(){
         this.States.splice(0, this.States.length);
         
-        var nodeSize = this.Nodes.length;
+        var nodeSize = this.Nodes.length - this.ContainerNodes;
+        
         var state = new SingleState();
-        for(var i = 0; i < this.Nodes.length; i++)
-            {
-              var val = this.Nodes[i];
-              state.AddANode(this.Nodes[i]);
-              state.Nodes[i].isUpdated = true;
-            }
+        for(var i = 0; i < this.Nodes.length; i++) {
+            var val = this.Nodes[i];
+            state.AddANode(this.Nodes[i]);
+            state.Nodes[i].isUpdated = true;
+        }
         
         if(nodeSize <= 0){
              state.text = "Stack is empty";
         }else{
-            state.text = "Size of stack is  "+nodeSize;
+            state.text = "Size of stack is  "+ nodeSize;
         }
         
         this.States.push(state);

@@ -124,7 +124,6 @@ function UpdateModal(idx) {
 function ProcessAction(idx) {
     
     buttonStopPress();
-    
     var inputs = [];
     if(controller.UIOptions[idx].type == "Input" || controller.UIOptions[idx].type == "Input-Event") {
         for(var j = 0; j < controller.UIOptions[idx].inputs.length; j++) {
@@ -139,6 +138,31 @@ function ProcessAction(idx) {
         }
         else {
             buttonPlayPress();
+        }
+    }
+}
+
+function ShowErrorModal(content = "This is the error") {
+    $("#errorModalForm").html(content);
+    $("#errorModal").modal({show: true});
+}
+
+function CheckForMaxNodes(existingNodesCount, newNodesCount, maxNodesAllowed) {
+    if((existingNodesCount + newNodesCount) > maxNodesAllowed) {
+        ShowErrorModal("Maximum nodes allowed are " + maxNodesAllowed);
+        return true;
+    }
+}
+
+function IsInvalidNumber(number) {
+    if(isNaN(number)) {
+        ShowErrorModal('<p>Invalid input</p><h6>Rules for input:</h6><ul><li>Values should be separated by comma</li><li>No special characters are allowed other than comma</li><li>Only integers allowed.</li><li>Range should be 0 to 255</li></ul>');
+        return true;
+    }
+    else {
+        if(number > 255 || number < 0) {
+            ShowErrorModal('<p>Invalid input</p><h6>Rules for input:</h6><ul><li>Values should be separated by comma</li><li>No special characters are allowed other than comma</li><li>Only integers allowed.</li><li>Range should be 0 to 255</li></ul>');
+            return true;
         }
     }
 }

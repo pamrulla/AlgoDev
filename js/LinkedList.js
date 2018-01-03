@@ -88,6 +88,16 @@ class LinkedList
     init() {
         var nodes = this.dataset.length;
         
+        if(CheckForMaxNodes(0, nodes, this.maxNodes)) {
+            return;
+        }
+        
+        for(var kk = 0; kk < this.dataset.length; kk++) {
+            if(IsInvalidNumber(this.dataset[kk])) {
+                return;
+            }
+        }
+        
         var offset = 0;
         
         for(var i = 0; i<nodes; i++)
@@ -346,6 +356,15 @@ class LinkedList
     }
     
     InsertAtEnd(number) {
+        
+        if(CheckForMaxNodes(this.dataset.length, 1, this.maxNodes)) {
+            return false;
+        }
+        
+        if(IsInvalidNumber(number)) {
+            return false;
+        }
+        
         var isEmpty = this.IsEmpty();
         
         this.States.splice(0, this.States.length);
@@ -382,6 +401,15 @@ class LinkedList
     }
     
     InsertAtHead(number) {
+        
+        if(CheckForMaxNodes(this.dataset.length, 1, this.maxNodes)) {
+            return false;
+        }
+        
+        if(IsInvalidNumber(number)) {
+            return false;
+        }
+        
         var isEmpty = this.IsEmpty();
         
         this.States.splice(0, this.States.length);
@@ -413,6 +441,18 @@ class LinkedList
     }
     
     InsertAtIndex(pos, number) {
+        if(CheckForMaxNodes(this.dataset.length, 1, this.maxNodes)) {
+            return false;
+        }
+        
+        if(IsInvalidNumber(number)) {
+            return false;
+        }
+        
+        if(IsInvalidNumber(pos)) {
+            return false;
+        }
+        
         var isEmpty = this.IsEmpty();
         if(pos == 0 || isEmpty) {
             this.InsertAtHead(number);
@@ -638,6 +678,11 @@ class LinkedList
     }
     
     Search(number) {
+        
+        if(IsInvalidNumber(number)) {
+            return false;
+        }
+        
         this.States.splice(0, this.States.length);
         
         this.InsertInitialState();

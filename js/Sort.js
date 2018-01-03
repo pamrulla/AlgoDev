@@ -16,6 +16,8 @@ class Sort {
         this.States = [];
         this.UIOptions = [];
         
+        this.maxNodes = 20;
+        
         this.ProcessInput(customValues);
         this.init();
         this.UpdateUIOptions();
@@ -40,6 +42,17 @@ class Sort {
     
     init() {
         var nodes = this.dataset.length;
+        
+        if(CheckForMaxNodes(0, nodes, this.maxNodes)) {
+            return;
+        }
+        
+        for(var kk = 0; kk < this.dataset.length; kk++) {
+            if(IsInvalidNumber(this.dataset[kk])) {
+                return;
+            }
+        }
+        
         var widthPerNode = width / nodes;
         var offset = 1;
         var bottomBarPadding = 50;

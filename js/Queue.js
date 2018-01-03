@@ -18,6 +18,7 @@ class Queue
         this.dataset = [];
         
         this.maxNodes = 8;
+        this.ContainerNodes = 3;
         this.nodeHeight = 50;
         this.topPadding = 50;
         this.leftRightPadding = 50;
@@ -65,6 +66,16 @@ class Queue
     
     init() {
         var nodes = this.dataset.length;
+        
+        if(CheckForMaxNodes(0, nodes, this.maxNodes)) {
+            return;
+        }
+        
+        for(var kk = 0; kk < this.dataset.length; kk++) {
+            if(IsInvalidNumber(this.dataset[kk])) {
+                return;
+            }
+        }
         
         var container = new Node();
         container.x = this.leftRightPadding;
@@ -149,12 +160,10 @@ class Queue
             return true;
         }
         else if(this.UIOptions[idx].name == "Enqueue") {
-            this.Enqueue(parseInt(inputs[0]));
-            return true;
+            return this.Enqueue(parseInt(inputs[0]));
         }
         else if(this.UIOptions[idx].name == "Dequeue") {
-            this.Dequeue(parseInt(inputs[0]));
-            return true;
+            return this.Dequeue(parseInt(inputs[0]));
         }
     }
     
@@ -235,7 +244,7 @@ class Queue
     }
     
     SelectHeadNode() {
-        var idx = 3;
+        var idx = this.ContainerNodes;
         this.Nodes[idx].color = "dodgerblue";
         
         //insert a state
@@ -250,7 +259,7 @@ class Queue
     }
     
     InsertStateToPop() {
-        var idx = 3;
+        var idx = this.ContainerNodes;
         for(var i = this.Nodes.length-1; i > idx; i--) {
             this.Nodes[i].x = this.Nodes[i-1].x;
             this.Nodes[i].text.x = this.Nodes[i-1].text.x;
@@ -271,6 +280,14 @@ class Queue
     }
     
     Enqueue(number) {
+        if(CheckForMaxNodes(this.Nodes.length - this.ContainerNodes, 1, this.maxNodes)) {
+            return false;
+        }
+        
+        if(IsInvalidNumber(number)) {
+            return false;
+        }
+        
         this.States.splice(0, this.States.length);
         
         this.InsertInitialState();
@@ -283,7 +300,8 @@ class Queue
     }
     
     DeletePopNode() {
-        var idx = 3;
+        
+        var idx = this.ContainerNodes;
         
         this.Nodes[idx].isDelete = true;
         
@@ -304,12 +322,20 @@ class Queue
         
         this.InsertInitialState();
         
-        this.SelectHeadNode(number);
-        
-        this.InsertStateToPop();
-        
-        this.DeletePopNode();
-        
-        this.InsertFinalState();
+        if(this.Nodes.length != this.ContainerNodes) {
+            this.SelectHeadNode(number);
+
+            this.InsertStateToPop();
+
+            this.DeletePopNode();
+
+            this.InsertFinalState();
+        }
+        else {
+            var st = new SingleState();
+            st.text = "Queue is already emtpy!!!";
+            this.States.push(st);
+        }
+        return true;
     }
 }
