@@ -65,9 +65,32 @@
     $content .= $colors[mt_rand(0, count($colors)-1)];
     $content .= '" style="width: 320px;"><em id="state-comment">';
     $content .= get_the_title();
-    $content .= '</em></div></div></div><div class="row"><div class="col-sm-4"><div class="dropup"><button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="actionsdropup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-bars"></i></button><ul class="dropdown-menu" id="actionsdropup-list" aria-labelledby="actionsdropup"><!--<li><a href="#">Create</a></li><li role="separator" class="divider"></li><li><a href="#">Separated link</a></li>--></ul></div></div><div class="col-sm-8"><div id="controls-area" class="text-center1"><div class="player"><button type="button" id="button_fbw" class="btn btn-sm btn-rose btn-simple1" onclick="buttonRewindPress()"><i class="fa fa-fast-backward"></i></button><button type="button" id="button_bw" class="btn btn-sm btn-dribbble btn-simple1" onclick="buttonBackPress()"><i class="fa fa-backward"></i></button><button type="button" id="button_play" class="btn btn-sm btn-facebook btn-simple1" onclick="buttonPlayPress()"><i class="fa fa-play"></i></button><button type="button" id="button_stop" class="btn btn-sm btn-youtube btn-simple1" onclick="buttonStopPress()"><i class="fa fa-stop"></i></button><button type="button" id="button_fw" class="btn btn-sm btn-twitter btn-simple1" onclick="buttonForwardPress()"><i class="fa fa-forward"></i></button><button type="button" id="button_ffw" class="btn btn-sm btn-linkedin btn-simple1" onclick="buttonFastforwardPress()"><i class="fa fa-fast-forward"></i></button></div></div></div></div></div>'
 
+$content .= '</em></div></div></div>';
+$content .= '<div class="row">';
+    $content .= '<div class="col-sm-4">';
+        $content .= '<div class="dropup">';
+            $content .= '<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="actionsdropup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-bars"></i></button>';
+            $content .= '<ul class="dropdown-menu" id="actionsdropup-list" aria-labelledby="actionsdropup"></ul>';
+            $content .= '<a href="https://github.com/smartgnan/Smart-Algo-Downloads/tree/master/'. $terms[0]->name .'" target="_blank" class="btn btn-sm btn-instagram"><i class="fa fa-download"></i></a>';
+        $content .= '</div>';
+    $content .= '</div>';
+    $content .= '<div class="col-sm-8">';
+        $content .= '<div id="controls-area" class="text-center1">';
+            $content .= '<div class="player">';
+                $content .= '<button type="button" id="button_fbw" class="btn btn-sm btn-rose btn-simple1" onclick="buttonRewindPress()"><i class="fa fa-fast-backward"></i></button>';
+                $content .= '<button type="button" id="button_bw" class="btn btn-sm btn-dribbble btn-simple1" onclick="buttonBackPress()"><i class="fa fa-backward"></i></button>';
+                $content .= '<button type="button" id="button_play" class="btn btn-sm btn-facebook btn-simple1" onclick="buttonPlayPress()"><i class="fa fa-play"></i></button>';
+                $content .= '<button type="button" id="button_stop" class="btn btn-sm btn-youtube btn-simple1" onclick="buttonStopPress()"><i class="fa fa-stop"></i></button>';
+                $content .= '<button type="button" id="button_fw" class="btn btn-sm btn-twitter btn-simple1" onclick="buttonForwardPress()"><i class="fa fa-forward"></i></button>';
+                $content .= '<button type="button" id="button_ffw" class="btn btn-sm btn-linkedin btn-simple1" onclick="buttonFastforwardPress()"><i class="fa fa-fast-forward"></i></button>';
+            $content .= '</div>';
+        $content .= '</div>';
+    $content .= '</div>';
+$content .= '</div>';
+$content .= '</div>';
 ?>
+
 <div class="<?php echo hestia_layout(); ?>">
 	<div class="blog-post <?php esc_attr( $class_to_add ); ?>">
             <?php echo $content; ?>    
