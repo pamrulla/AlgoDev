@@ -20,7 +20,7 @@ class Queue
         this.maxNodes = 8;
         this.ContainerNodes = 3;
         this.nodeHeight = 50;
-        this.topPadding = 50;
+        this.topPadding = height / 2;
         this.leftRightPadding = 50;
         this.padding = 2;
         this.nodeRadius = (((width - this.leftRightPadding - this.leftRightPadding) / this.maxNodes))/2 - this.padding;

@@ -29,7 +29,7 @@
 <div class="modal fade" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="actionModalLabel">
   <div class="modal-dialog modal-sm1" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header"  style="background-color: lightcoral;">
         <h4 class="modal-title" id="actionModalLabel">Modal title</h4>
       </div>
       <div class="modal-body">
@@ -45,9 +45,33 @@
   </div>
 </div>
 
+<?php $page_id = get_the_ID();
+$page_object = get_page( $page_id );
+$cnt = $page_object->post_content;
+?>
+
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel">
+  <div class="modal-dialog modal-sm1" role="document" style="overflow-y: initial !important">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: lightcoral;">
+        <h4 class="modal-title" id="actionModalLabel"><?php echo get_the_title(); ?></h4>
+      </div>
+      <div class="modal-body" style="height: 250px; overflow-y: auto;">
+            <?php echo $cnt; ?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel">
   <div class="modal-dialog modal-sm1" role="document">
     <div class="modal-content">
+      <div class="modal-header" style="background-color: lightcoral;">
+        <h4 class="modal-title">Invalid Input</h4>
+      </div>
       <div class="modal-body">
         <div class="alert alert-danger" role="alert" id="errorModalForm">
             
@@ -73,6 +97,9 @@ $content .= '<div class="row">';
             $content .= '<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="actionsdropup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-bars"></i></button>';
             $content .= '<ul class="dropdown-menu" id="actionsdropup-list" aria-labelledby="actionsdropup"></ul>';
             $content .= '<a href="https://github.com/smartgnan/Smart-Algo-Downloads/tree/master/'. $terms[0]->name .'" target="_blank" class="btn btn-sm btn-instagram"><i class="fa fa-download"></i></a>';
+            if($cnt != "") {
+              $content .= '<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#infoModal"><i class="fa fa-info"></i></button>';
+            }
         $content .= '</div>';
     $content .= '</div>';
     $content .= '<div class="col-sm-8">';
