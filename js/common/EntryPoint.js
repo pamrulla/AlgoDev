@@ -190,3 +190,7 @@ function ProcessInput(customValues, numberOfDefault) {
     
     return dataset;
 }
+
+function processSpeed(value) {
+    speed = defaultSpeed / value;
+}

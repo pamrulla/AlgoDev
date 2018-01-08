@@ -10,7 +10,6 @@
 
 var currentState = 0;
 var idForDefs = "def-markers";
-var speed = 500;
 
 function RenderEvents(UIOptions) {
     var actions = $("#actionsdropup-list");

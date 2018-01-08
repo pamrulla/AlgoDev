@@ -5,6 +5,8 @@ var mainSvg;
 var defs;
 var padding;
 var state = 'stop';
+var defaultSpeed = 1000;
+var speed = defaultSpeed;
 
 var $ = jQuery.noConflict();
 
