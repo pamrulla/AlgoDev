@@ -281,3 +281,7 @@ blockquote{
     border: 1px solid transparent;
     border-radius: 4px;
 }
+
+.mepr_error {
+    text-align: center;
+}

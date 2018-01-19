@@ -85,13 +85,7 @@ $cnt = $page_object->post_content;
 </div>
 <?php 
     $colors = ["purple-gradient", "peach-gradient", "blue-gradient", "green-gradient"];
-    $content = '<div class="container-fluid"><div class="row"><div id="sim-area" class="text-center"></div></div><div class="row"><div class="text-center"><div class="card text-center text-white ';
-    $content .= $colors[mt_rand(0, count($colors)-1)];
-    $content .= '" style="width: 320px;"><em id="state-comment">';
-    $content .= get_the_title();
-        
-$content .= '</em></div></div></div>';
-$content .= '<div class="row">';
+$content = '<div class="row">';
     $content .= '<div class="col-sm-4">';
         $content .= '<div class="dropup">';
             $content .= '<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="actionsdropup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-bars"></i></button>';
@@ -123,12 +117,26 @@ $content .= '<div class="row">';
         $content .= '</div>';
     $content .= '</div>';
 $content .= '</div>';
-$content .= '</div>';
 ?>
 <div class="<?php echo hestia_layout(); ?>">
 	<div class="blog-post <?php /*esc_attr( $class_to_add );*/ ?>">
-            <?php echo do_shortcode('[mepr-active rules="87" ifallowed="show" unauth="message" ]' . $content . '[/mepr-active]'); ?>
-            
+        <div class="container-fluid">
+            <div class="row">
+                <div id="sim-area" class="text-center"></div>
+            </div>
+            <div class="row">
+                <div class="text-center">
+                    <div class="card text-center text-white <?php echo $colors[mt_rand(0, count($colors)-1)]; ?>" style="width: 320px;">
+                        <em id="state-comment">
+                            <?php echo get_the_title(); ?>        
+                        </em>
+                    </div>
+                </div>
+            </div>
+
+            <?php echo do_shortcode('[mepr-active rules="87" ifallowed="show" unauth="message" unauth_message="Controls to play with visualization are hidden. To play, login or register with us."]' . $content . '[/mepr-active]'); ?>
+        
+        </div>    
             <div class="container"><div class="row" style="margin: 30px;"><div class="col-md-6 col-md-offset-3">
             <?php echo do_shortcode('[mepr-active rules="87" ifallowed="show" unauth="login"][/mepr-active]'); ?>
             </div></div></div>
