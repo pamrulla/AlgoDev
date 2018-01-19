@@ -199,6 +199,7 @@ async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame =
                         }
                         d3.select("#"+states[i].Nodes[j].id).transition()
                             .attr("fill", states[i].Nodes[j].color)
+                            .attr("height", states[i].Nodes[j].height)
                             .attr("x", states[i].Nodes[j].x)
                             .attr("y", states[i].Nodes[j].y).duration(speed / 2)
                             .duration(speed / 2);
