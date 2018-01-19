@@ -163,7 +163,6 @@ async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame =
         $("#state-comment").html(states[i].text);
         for(var j=0; j<states[i].Nodes.length; j++)
         {
-            console.log("Enterd");
             CheckAndDeleteUnwantedNodes(states[i].Nodes);
             if(states[i].Nodes[j].isUpdated)
             {

@@ -20,10 +20,14 @@ class Sort {
         
         this.bottomBarPadding = 50;
         this.bottomTextPadding = 30;
+        this.widthPerNode = this.maxNodes;
         
         this.dataset = ProcessInput(customValues, 8);
         this.init();
         this.UpdateUIOptions();
+        
+        this.colors = ["#ffe119", "#0082c8", "#911eb4", "#46f0f0", "#f032e6", "#d2f53c", "#fabebe", "#e6beff", "#fffac8", "#aaffc3", "#ffd8b1", "#FFA07A", "#DB7093", "#FF6347", "#FFD700", "#ADFF2F", "#00CED1", "#D2B48C", "#7B68EE", "#BDB76B", "#FF4500", "#FFEFD5", "#4682B4", "#F5DEB3", "#DA70D6", "#008B8B", "#4169E1"];
+        this.colorIdx = 0;
     }
     
     init() {
@@ -39,7 +43,8 @@ class Sort {
             }
         }
         
-        var widthPerNode = width / nodes;
+        this.widthPerNode = width / nodes;
+        
         var offset = 1;
         var hscale = d3.scaleLinear()
                         .domain([d3.min(this.dataset) - offset, d3.max(this.dataset)])
@@ -52,10 +57,10 @@ class Sort {
         for(var i = 0; i<nodes; i++)
         {
             var n = new Node();
-            n.x = widthPerNode * i;
+            n.x = this.widthPerNode * i;
             n.y = yscale(this.dataset[i]);
             n.color = "orange";
-            n.width = widthPerNode - padding;
+            n.width = this.widthPerNode - padding;
             n.height = hscale(this.dataset[i]);
             n.id = "bar-" + i;
             
@@ -63,7 +68,7 @@ class Sort {
             n.text.color = "gray";
             n.text.font = "sanserif";
             n.text.size = "20";
-            n.text.x = (widthPerNode * i) + ((widthPerNode - padding) / 2);
+            n.text.x = (this.widthPerNode * i) + ((this.widthPerNode - padding) / 2);
             n.text.y = height - this.bottomTextPadding;
             n.text.id = "tbar-" + i;
             
@@ -364,6 +369,161 @@ class Sort {
     
     /* Insertion Sort Region Ends */
     
+    
+    /* Merge Sort Region Starts */
+    
+    
+    MergeSort() {
+        
+        var topMargin = 5;
+        var heightOfNode = 25;
+        this.colorIdx = 0;
+        
+        this.InsertState("Initial State");
+        
+        for(var i = 0; i < this.Nodes.length; i++) {
+            this.Nodes[i].height = heightOfNode;
+            this.Nodes[i].y = topMargin;
+            this.Nodes[i].text.y = this.Nodes[i].y + parseInt(this.Nodes[i].text.size);
+            this.Nodes[i].color = this.colors[this.colorIdx % this.colors.length];
+            this.colorIdx++;
+        }
+        this.InsertState("Dividing all elements to partition of size 1");
+        
+        var nextY = 0;
+        
+        var xOffset = 0;
+        
+        var curr_size;  // For current size of subarrays to be merged
+                   // curr_size varies from 1 to n/2
+        var left_start; // For picking starting index of left subarray
+        // to be merged
+
+        // Merge subarrays in bottom up manner.  First merge subarrays of
+        // size 1 to create sorted subarrays of size 2, then merge subarrays
+        // of size 2 to create sorted subarrays of size 4, and so on.
+        for (curr_size=1; curr_size<=this.Nodes.length-1; curr_size = 2*curr_size) {
+            
+            nextY = nextY + (topMargin + heightOfNode) + (topMargin * 5);
+            
+            xOffset = 0;
+            
+            
+            // Pick starting point of different subarrays of current size
+            for (left_start=0; left_start<this.Nodes.length-1; left_start += 2*curr_size) {
+                // Find ending point of left subarray. mid+1 is starting 
+                // point of right
+                var mid = Math.min(left_start + curr_size - 1, this.Nodes.length-1);
+
+                var right_end = Math.min(left_start + 2*curr_size - 1, this.Nodes.length-1);
+                
+                /*for(var i = left_start; i <= mid; i++) {
+                    this.Nodes[i].color = "orange";
+                }
+                
+                for(i = mid+1; i <= right_end; i++) {
+                    this.Nodes[i].color = "orange";
+                }*/
+                this.InsertState("Merging selected sub elements");
+                
+                var j = left_start;
+                var k = mid+1;
+                
+                this.colorIdx = this.colorIdx % this.colors.length;
+                
+                while(j <= mid && k <= right_end) {
+                    this.Nodes[j].color = "red";
+                    this.Nodes[k].color = "red";
+                    this.InsertState("Comparing " + this.Nodes[j].text.value + " & " + this.Nodes[k].text.value);
+                    
+                    if(this.Nodes[j].text.value < this.Nodes[k].text.value) {
+                        this.Nodes[j].x = this.widthPerNode * xOffset;
+                        this.Nodes[j].y = nextY;
+                        this.Nodes[j].text.x = (this.widthPerNode * xOffset) + ((this.widthPerNode - padding) / 2);
+                        this.Nodes[j].text.y = this.Nodes[j].y + parseInt(this.Nodes[j].text.size);
+                        this.Nodes[j].color = this.colors[this.colorIdx];
+                        this.InsertState("Placing value " + this.Nodes[j].text.value + " in right position");
+                        ++j;
+                    }
+                    else {
+                        this.Nodes[k].x = this.widthPerNode * xOffset;
+                        this.Nodes[k].y = nextY;
+                        this.Nodes[k].text.x = (this.widthPerNode * xOffset) + ((this.widthPerNode - padding) / 2);
+                        this.Nodes[k].text.y = this.Nodes[k].y + parseInt(this.Nodes[k].text.size);
+                        this.Nodes[k].color = this.colors[this.colorIdx];
+                        this.InsertState("Placing value " + this.Nodes[k].text.value + " in right position");
+                        ++k;
+                    }
+                    ++xOffset;
+                }
+                
+                while(j <= mid) {
+                    this.Nodes[j].color = "red";
+                    this.InsertState("Selecting " + this.Nodes[j].text.value);
+                    
+                    this.Nodes[j].x = this.widthPerNode * xOffset;
+                    this.Nodes[j].y = nextY;
+                    this.Nodes[j].text.x = (this.widthPerNode * xOffset) + ((this.widthPerNode - padding) / 2);
+                    this.Nodes[j].text.y = this.Nodes[j].y + parseInt(this.Nodes[j].text.size);
+                    this.Nodes[j].color = this.colors[this.colorIdx];
+                    this.InsertState("Placing value " + this.Nodes[j].text.value + " in right position");
+                    ++j;
+                    ++xOffset;
+                }
+                
+                while(k <= right_end) {
+                    this.Nodes[k].color = "red";
+                    this.InsertState("Selecting " + this.Nodes[k].text.value);
+                    
+                    this.Nodes[k].x = this.widthPerNode * xOffset;
+                    this.Nodes[k].y = nextY;
+                    this.Nodes[k].text.x = (this.widthPerNode * xOffset) + ((this.widthPerNode - padding) / 2);
+                    this.Nodes[k].text.y = this.Nodes[k].y + parseInt(this.Nodes[k].text.size);
+                    this.Nodes[k].color = this.colors[this.colorIdx];
+                    this.InsertState("Placing value " + this.Nodes[k].text.value + " in right position");
+                    ++k;
+                    ++xOffset;
+                }
+                
+                this.colorIdx++;                                
+            }
+            
+            for(var j = 0; j < this.Nodes.length; j++) {
+                    for(k = 0; k < this.Nodes.length - j - 1; k++) {
+                        if(this.Nodes[k].x > this.Nodes[k+1].x) {
+                            var t  = this.Nodes[k];
+                            this.Nodes[k] = this.Nodes[k+1];
+                            this.Nodes[k+1] = t;
+                        }
+                    }
+                }
+        }
+        
+        var offset = 1;
+        var hscale = d3.scaleLinear()
+                        .domain([d3.min(this.dataset) - offset, d3.max(this.dataset)])
+                        .range([0, height - this.bottomBarPadding]);
+                        
+        var yscale = d3.scaleLinear()
+                        .domain([d3.min(this.dataset) - offset, d3.max(this.dataset)])
+                        .range([height - this.bottomBarPadding, 0]);
+        
+        for(var i = 0; i<this.Nodes.length; i++)
+        {
+            this.Nodes[i].y = yscale(this.Nodes[i].text.value);
+            this.Nodes[i].color = "green";
+            this.Nodes[i].height = hscale(this.Nodes[i].text.value);
+            
+            this.Nodes[i].text.x = (this.widthPerNode * i) + ((this.widthPerNode - padding) / 2);
+            this.Nodes[i].text.y = height - this.bottomTextPadding;
+        }
+        
+        this.InsertState("Final state of sorted elements");
+        
+    }
+    
+    /* Merge Sort Region Ends */
+    
     ProcessSorting(type) {
         if(type == "BubbleSort")
         {
@@ -376,6 +536,10 @@ class Sort {
         else if(type == "InsertionSort")
         {
             this.InsertionSort();
+        }
+        else if(type == "MergeSort")
+        {
+            this.MergeSort();
         }
     }
 }

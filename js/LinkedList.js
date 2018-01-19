@@ -582,7 +582,6 @@ class LinkedList
             st.text = "List is already Empty!!!";
             this.States.push(st);
         }
-        console.log(this.States);
         return true;
     }
     
