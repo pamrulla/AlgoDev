@@ -26,7 +26,7 @@ class Sort {
         this.init();
         this.UpdateUIOptions();
         
-        this.colors = ["#ffe119", "#0082c8", "#911eb4", "#46f0f0", "#f032e6", "#d2f53c", "#fabebe", "#e6beff", "#fffac8", "#aaffc3", "#ffd8b1", "#FFA07A", "#DB7093", "#FF6347", "#FFD700", "#ADFF2F", "#00CED1", "#D2B48C", "#7B68EE", "#BDB76B", "#FF4500", "#FFEFD5", "#4682B4", "#F5DEB3", "#DA70D6", "#008B8B", "#4169E1"];
+        this.colors = ["#ffe119", "#46f0f0", "#f032e6", "#d2f53c", "#fabebe", "#e6beff", "#fffac8", "#aaffc3", "#ffd8b1", "#FFD700", "#ADFF2F", "#00CED1", "#D2B48C", "#7B68EE", "#BDB76B", "#FFEFD5", "#4682B4", "#F5DEB3", "#DA70D6"];
         this.colorIdx = 0;
     }
     
@@ -417,13 +417,17 @@ class Sort {
 
                 var right_end = Math.min(left_start + 2*curr_size - 1, this.Nodes.length-1);
                 
-                /*for(var i = left_start; i <= mid; i++) {
-                    this.Nodes[i].color = "orange";
+                for(var i = left_start; i <= mid; i++) {
+                    //this.Nodes[i].color = "orange";
+                    this.Nodes[i].y += 25;
+                    this.Nodes[i].text.y += 25;
                 }
                 
                 for(i = mid+1; i <= right_end; i++) {
-                    this.Nodes[i].color = "orange";
-                }*/
+                    //this.Nodes[i].color = "orange";
+                    this.Nodes[i].y += 25;
+                    this.Nodes[i].text.y += 25;
+                }
                 this.InsertState("Merging selected sub elements");
                 
                 var j = left_start;
