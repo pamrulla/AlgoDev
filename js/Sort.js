@@ -528,6 +528,95 @@ class Sort {
     
     /* Merge Sort Region Ends */
     
+    /* Quick Sort Region Starts */
+    
+    Swap(i , j) {
+        var t = this.Nodes[i];
+        this.Nodes[i] = this.Nodes[j];
+        this.Nodes[j] = t;
+    }
+    
+    SwapXLocations(i, j) {
+        var temp = this.Nodes[i].x;
+        this.Nodes[i].x = this.Nodes[j].x;
+        this.Nodes[j].x = temp;
+        
+        temp = this.Nodes[i].text.x;
+        this.Nodes[i].text.x = this.Nodes[j].text.x;
+        this.Nodes[j].text.x = temp;
+                
+    }
+
+    
+    QuickSortPartition(l, h) {
+        var x = this.Nodes[h].text.value;
+        var i = l - 1;
+        
+        this.Nodes[h].color = "blue";
+        this.InsertState("Selecting element " + x + " as pivot");
+        
+        for(var j = l; j < h; j++) {
+            this.Nodes[j].color = "red";
+            this.InsertState("Comparing pivot value " + x + " with " + this.Nodes[j].text.value)
+            
+            if(this.Nodes[j].text.value <= x) {
+                i++;
+                
+                if(i != j) {
+                    this.SwapXLocations(i , j);
+                    this.InsertState(this.Nodes[j].text.value + " is less than or equal to pivot value " + x + ", hence, placing in to right position");
+                    this.Swap(i, j);
+                }
+                this.Nodes[i].color = "orange";
+            }
+            else {
+                this.Nodes[j].color = "orange";
+            }
+        }
+        this.Nodes[i+1].color = "red";
+        this.SwapXLocations(i+1 , j);
+        this.InsertState("Placing the pivot value " + x + " in to right position");
+        this.Nodes[i+1].color = "orange";
+        this.Swap(i+1, h);
+        
+        this.Nodes[i+1].color = "green";
+        this.InsertState("Pivot Value " + x + " is sorted");
+        
+        return i + 1;
+    }
+    
+    QuickSort() {
+        this.InsertState("Initial State");
+        
+        var stack = [];
+        
+        var l = 0;
+        var h = this.Nodes.length - 1;
+        
+        stack.push(l);
+        stack.push(h);
+        
+        while(stack.length != 0) {
+            h = stack.pop();
+            l = stack.pop();
+            
+            var p = this.QuickSortPartition(l, h);
+            
+            if(p-1 >= l) {
+                stack.push(l);
+                stack.push(p-1);
+            }
+            
+            if(p+1 <= h) {
+                stack.push(p+1);
+                stack.push(h);
+            }
+        }
+        
+        this.InsertState("Final State");
+    } 
+    
+    /* Quick Sort Region Ends */
     ProcessSorting(type) {
         if(type == "BubbleSort")
         {
@@ -544,6 +633,10 @@ class Sort {
         else if(type == "MergeSort")
         {
             this.MergeSort();
+        }
+        else if(type == "QuickSort")
+        {
+            this.QuickSort();
         }
     }
 }
