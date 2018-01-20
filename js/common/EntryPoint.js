@@ -193,4 +193,5 @@ function ProcessInput(customValues, numberOfDefault) {
 
 function processSpeed(value) {
     speed = defaultSpeed / value;
+    $('#speedValue').html(value + "x");
 }
