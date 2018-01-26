@@ -130,7 +130,7 @@ $content .= '</div>';
 	<div class="blog-post <?php esc_attr( $class_to_add ); ?>">
             <?php echo $content; ?>    
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6 col-md-offset-6">
                 <?php do_action( 'hestia_blog_social_icons' ); ?>
                 </div>
             </div>

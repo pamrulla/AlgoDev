@@ -141,7 +141,7 @@ $content .= '</div>';
             <?php echo do_shortcode('[mepr-active rules="87" ifallowed="show" unauth="login"][/mepr-active]'); ?>
             </div></div></div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6 col-md-offset-6">
                 <?php do_action( 'hestia_blog_social_icons' ); ?>
                 </div>
             </div>
