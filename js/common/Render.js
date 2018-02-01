@@ -132,6 +132,9 @@ function sleep(ms) {
 }
 
 async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame = false, isPrevFrame = false, isLastFrame = false) {
+    
+    var isSingleFrame = isFirstFrameToRender || isNextFrame || isPrevFrame || isLastFrame;
+    
     if(isFirstFrameToRender){
         currentState = 0;
     }
@@ -145,18 +148,29 @@ async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame =
         currentState = states.length - 1;
     }
     
+    if(isSingleFrame) {
+        if(currentState > states.length) {
+            currentState = states.length - 1;
+        }
+        else if(currentState < 0) {
+            currentState = 0;
+        }
+    }
+    
     for(var i = currentState; i < states.length; i++)
     {
-        if(isFirstFrameToRender || isNextFrame || isPrevFrame || isLastFrame) {
-            return;
-        }
-        
-        if(state == 'play' || state == 'resume  ') {
-            await sleep(speed);
-        }
-        else if(state == 'stop') {
-            currentState = 0;
-            return;
+        if(!isSingleFrame) {
+            if(state == 'play' || state == 'resume') {
+                await sleep(speed);
+            }
+            else if(state == 'stop') {
+                i = 0;
+                isSingleFrame = true;
+            }
+            else if(state == 'pause') {
+                currentState = i;
+                return;
+            }
         }
         
         currentState = i;
@@ -249,10 +263,16 @@ async function PlayAnimation(states, isFirstFrameToRender = false, isNextFrame =
                 }
             }
         }
+        
+        if(isSingleFrame) {
+            return;
+        }
     }
     
-    currentState = 0;
-    buttonStopPress(true);
+    if(!isSingleFrame) {
+        currentState = 0;
+        buttonStopPress(true);
+    }
 }
 
 function CheckAndDeleteUnwantedNodes(Nodes) {

@@ -97,13 +97,12 @@ function buttonPlayPress() {
 }
 
 function buttonStopPress(isCompleted = false){
-    state = 'stop';
     var button = d3.select("#button_play").classed('btn-success', false);
     button.select("i").attr('class', "fa fa-play");
-    if(controller != null && isCompleted == false)
-    {
+    if(state == 'pause') {
         PlayAnimation(controller.States, true);
     }
+    state = 'stop';
 }
 
 function UpdateModal(idx) {
