@@ -92,26 +92,24 @@ $cnt = $page_object->post_content;
 
 $content .= '</em></div></div></div>';
 $content .= '<div class="row">';
-    $content .= '<div class="col-sm-4">';
-        $content .= '<div class="dropup">';
-            $content .= '<button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="actionsdropup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-bars"></i></button>';
-            $content .= '<ul class="dropdown-menu" id="actionsdropup-list" aria-labelledby="actionsdropup"></ul>';
-            $content .= '<a href="https://github.com/smartgnan/Smart-Algo-Downloads/tree/master/'. $terms[0]->name .'" target="_blank" class="btn btn-sm btn-instagram"><i class="fa fa-download"></i></a>';
-            if($cnt != "") {
-              $content .= '<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#infoModal"><i class="fa fa-info"></i></button>';
-            }
-        $content .= '</div>';
-    $content .= '</div>';
-    $content .= '<div class="col-sm-8">';
-        $content .= '<div id="controls-area" class="text-center1">';
+   $content .= '<div class="col-sm-12">';
+        $content .= '<div id="controls-area" class="text-center">';
             $content .= '<div class="player">';
-                $content .= '<button type="button" id="button_fbw" class="btn btn-sm btn-rose btn-simple1" onclick="buttonRewindPress()"><i class="fa fa-fast-backward"></i></button>';
-                $content .= '<button type="button" id="button_bw" class="btn btn-sm btn-dribbble btn-simple1" onclick="buttonBackPress()"><i class="fa fa-backward"></i></button>';
-                $content .= '<button type="button" id="button_play" class="btn btn-sm btn-facebook btn-simple1" onclick="buttonPlayPress()"><i class="fa fa-play"></i></button>';
-                $content .= '<button type="button" id="button_stop" class="btn btn-sm btn-youtube btn-simple1" onclick="buttonStopPress()"><i class="fa fa-stop"></i></button>';
+                $content .= '<div style="display: inline-block; position:relative" class="dropup">';
+                    $content .= '<a href="#!" type="button" class="btn btn-sm btn-primary dropdown-toggle" id="actionsdropup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars"></i></a>';
+                    $content .= '<ul class="dropdown-menu" id="actionsdropup-list" aria-labelledby="actionsdropup"></ul>';
+                $content .= '</div>';
+                $content .= '<a href="https://github.com/smartgnan/Smart-Algo-Downloads/tree/master/'. $terms[0]->name .'" target="_blank" class="btn btn-sm btn-instagram"><i class="fa fa-download"></i></a>';
+                if($cnt != "") {
+                    $content .= '<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#infoModal"><i class="fa fa-info"></i></button>';
+                }
+                $content .= '<button type="button" id="button_fbw" class="btn btn-sm btn-twitter btn-simple1" onclick="buttonRewindPress()"><i class="fa fa-fast-backward"></i></button>';
+                $content .= '<button type="button" id="button_bw" class="btn btn-sm btn-twitter btn-simple1" onclick="buttonBackPress()"><i class="fa fa-backward"></i></button>';
+                $content .= '<button type="button" id="button_play" class="btn btn-sm btn-twitter btn-simple1" onclick="buttonPlayPress()"><i class="fa fa-play"></i></button>';
+                $content .= '<button type="button" id="button_stop" class="btn btn-sm btn-twitter btn-simple1" onclick="buttonStopPress()"><i class="fa fa-stop"></i></button>';
                 $content .= '<button type="button" id="button_fw" class="btn btn-sm btn-twitter btn-simple1" onclick="buttonForwardPress()"><i class="fa fa-forward"></i></button>';
-                $content .= '<button type="button" id="button_ffw" class="btn btn-sm btn-linkedin btn-simple1" onclick="buttonFastforwardPress()"><i class="fa fa-fast-forward"></i></button>';
-            	$content .= '<div style="display: inline-block; position:relative" class="dropup"><a href="#!" type="button" class="btn btn-youtube dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span id="speedValue">1x</span> <span class="caret"></span></a>';
+                $content .= '<button type="button" id="button_ffw" class="btn btn-sm btn-twitter btn-simple1" onclick="buttonFastforwardPress()"><i class="fa fa-fast-forward"></i></button>';
+            	$content .= '<div style="display: inline-block; position:relative" class="dropup"><a href="#!" type="button" class="btn btn-sm btn-youtube dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span id="speedValue">1x</span> <span class="caret"></span></a>';
                     $content .= '<ul class="dropdown-menu" role="menu" style="min-width: 0px;">';
                     $content .= '<li><a href="#!" onclick="processSpeed(2);">2x</a></li>';
                     $content .= '<li><a href="#!" onclick="processSpeed(1.5);">1.5x</a></li>';
