@@ -34,6 +34,10 @@ function InitializeController(inputs = null) {
         controller = new LinkedList(inputs);
         ProcessRender(controller);
     }
+    else if(window['topic'] == "Search"){
+        controller = new Search(inputs, window['typename']);
+        ProcessRender(controller);
+    }
 }
 
 function ProcessRender(controller) {
