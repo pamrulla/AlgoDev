@@ -132,11 +132,11 @@ $content .= '</div>';
                 </div>
             </div>
 
-            <?php echo do_shortcode('[mepr-active rules="87" ifallowed="show" unauth="message" unauth_message="Controls to play with visualization are hidden. To play, login or register with us."]' . $content . '[/mepr-active]'); ?>
+            <?php echo do_shortcode('[mepr-active rules="57" ifallowed="show" unauth="message" unauth_message="Controls to play with visualization are hidden. To play, login or register with us."]' . $content . '[/mepr-active]'); ?>
         
         </div>    
             <div class="container"><div class="row" style="margin: 30px;"><div class="col-md-6 col-md-offset-3">
-            <?php echo do_shortcode('[mepr-active rules="87" ifallowed="show" unauth="login"][/mepr-active]'); ?>
+            <?php echo do_shortcode('[mepr-active rules="57" ifallowed="show" unauth="login"][/mepr-active]'); ?>
             </div></div></div>
             <div class="row">
                 <div class="col-md-6 col-md-offset-6">
